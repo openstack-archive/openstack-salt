@@ -1,0 +1,9 @@
+[submodule "formulas/linux"]
+	path = formulas/linux
+	url = https://github.com/tcpcloud/salt-formula-linux.git
+[submodule "formulas/openssh"]
+	path = formulas/openssh
+	url = https://github.com/tcpcloud/salt-formula-openssh.git
+[submodule "formulas/salt"]
+	path = formulas/salt
+	url = https://github.com/tcpcloud/salt-formula-salt.git
