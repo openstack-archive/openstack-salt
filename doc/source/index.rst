@@ -16,8 +16,8 @@ Contents:
    :maxdepth: 2
 
    install/index
-   operation/index
-   developer/index
+   operate/index
+   develop/index
 
 
 Indices and tables

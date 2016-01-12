@@ -12,20 +12,20 @@ Overview
 
    overview.rst
 
-Deployment host
-^^^^^^^^^^^^^^^
+Config master
+^^^^^^^^^^^^^^^^^^^^
 
 .. toctree::
 
-   deployment-host.rst
+   master.rst
 
 
-Target hosts
-^^^^^^^^^^^^
+Config minions
+^^^^^^^^^^^^^^^^^^^^^
 
 .. toctree::
 
-   target-hosts.rst
+   minion.rst
 
 
 Configuration
@@ -41,6 +41,7 @@ Installation
 
 .. toctree::
 
-   install-foundation.rst
+   install.rst
+   install-config.rst
    install-infrastructure.rst
    install-openstack.rst

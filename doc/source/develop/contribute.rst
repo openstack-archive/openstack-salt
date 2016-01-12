@@ -1,4 +1,4 @@
-`Home <index.html>`_ OpenStack-Salt Developer Documentation
+`Home <index.html>`_ OpenStack-Salt Development Documentation
 
 Contributor Guidelines
 ======================

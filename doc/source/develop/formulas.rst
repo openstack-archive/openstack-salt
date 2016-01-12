@@ -1,4 +1,4 @@
-`Home <index.html>`_ OpenStack-Salt Developer Documentation
+`Home <index.html>`_ OpenStack-Salt Development Documentation
 
 Formulas
 ========
@@ -25,22 +25,19 @@ Or directly calling formula by Salt state module.
 Setting up the Physical Hosts
 -----------------------------
 
-Run `salt-run state.orchestrate orch.bare_metal` to set up the physical hosts for
-further setup.
+Run `salt-run state.orchestrate orch.bare_metal` to set up the physical hosts for further setup.
 
 Setting up Infrastructure Services
 ----------------------------------
 
-Infrastructure services services such as RabbitMQ, memcached, galera, and monitoring
-services which are not actually OpenStack services, but that OpenStack relies on.
+Infrastructure services services such as RabbitMQ, memcached, galera, and monitoring services which are not actually OpenStack services, but that OpenStack relies on.
 
 Run `salt-run state.orchestrate orch.infrastructure` to install these services.
 
 Setting up OpenStack Services
 -----------------------------
 
-Running `salt-run state.orchestrate orch.openstack` will install the following
-OpenStack services:
+Running `salt-run state.orchestrate orch.openstack` will install the following OpenStack services:
 
     * Keystone
     * Nova
