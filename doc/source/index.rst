@@ -8,7 +8,7 @@ Welcome to OpenStack-Salt's documentation!
 Overview
 ========
 
-This project provides Salt configuration templates (formulas) with required metadata (pillars) for installing and operating OpenStack cloud.
+This project provides complete set of Salt configuration templates for installing and operating robust OpenStack cloud deployments.
 
 Contents:
 

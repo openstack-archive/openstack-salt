@@ -1,13 +1,13 @@
 `Home <index.html>`_ OpenStack-Salt Development Documentation
 
-Chapter 1. Quick start
-=======================
-
+Chapter 2. Testing
+=====================
 
 .. toctree::
 
-   quickstart-vagrant.rst
-   quickstart-heat.rst
+   testing-coding-style.rst
+   testing-metadata.rst
+   testing-integration.rst
 
 --------------
 

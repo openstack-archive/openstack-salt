@@ -5,8 +5,6 @@ Chapter 1. Overview
 
 .. toctree::
 
-   overview-salt.rst
-   overview-security.rst
 
 --------------
 

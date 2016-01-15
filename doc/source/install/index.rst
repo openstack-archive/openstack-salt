@@ -1,5 +1,5 @@
 ==================================
-OpenStack-Salt Installation Manual
+OpenStack-Salt installation manual
 ==================================
 
 `Home <index.html>`_ OpenStack-Salt Installation Manual
@@ -41,7 +41,6 @@ Installation
 
 .. toctree::
 
-   install.rst
    install-config.rst
    install-infrastructure.rst
    install-openstack.rst

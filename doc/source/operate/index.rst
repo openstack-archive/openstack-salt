@@ -1,5 +1,5 @@
 ================================
-OpenStack-Salt Operations Manual
+OpenStack-Salt operations manual
 ================================
 
 `Home <index.html>`_ OpenStack-Salt Operations Manual
