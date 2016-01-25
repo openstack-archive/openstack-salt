@@ -11,6 +11,7 @@ Chapter 1. Overview
    overview-server-networking.rst
    overview-server-topology.rst
    overview-security.rst
+   overview-reference-arch.rst
 
 --------------
 

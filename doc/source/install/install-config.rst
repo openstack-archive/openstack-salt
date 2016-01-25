@@ -7,6 +7,8 @@ Chapter 5. Install configuration service
 
    install-config-bootstrap.rst
    install-config-validate.rst
+   install-config-master.rst
+   install-config-minion.rst
 
 
 --------------

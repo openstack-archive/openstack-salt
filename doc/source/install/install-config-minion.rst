@@ -1,11 +1,8 @@
 
-Configuring the operating system
+Target nodes installation
 ================================
 
 On most distributions, you can set up a Salt Minion with the `Salt Bootstrap <https://github.com/saltstack/salt-bootstrap>`_ .
-
-Bootstrap minion
------------------
 
 If you're looking for the *one-liner* to install salt, please scroll to the bottom and use the
 instructions for `Installing via an Insecure One-Liner`_.
@@ -78,17 +75,17 @@ Then explicitly declare the id for this minion to use. Since Salt uses detached 
 
 .. code-block:: yaml
 
-	id: foo.bar.com
+  id: foo.bar.com
 
 After updating the configuration files, restart the Salt minion.
 
 .. code-block:: bash
 
-	# Ubuntu
-	service salt-minion restart
-	# Redhat
-	systemctl enable salt-minion.service
-	systemctl start salt-minion
+  # Ubuntu
+  service salt-minion restart
+  # Redhat
+  systemctl enable salt-minion.service
+  systemctl start salt-minion
 
 See the `minion configuration reference <https://docs.saltstack.com/en/latest/ref/configuration/minion.html>`_
 for more details about other configurable options.
