@@ -1,6 +1,6 @@
 
-Configuring the hypervisors
-===========================
+Configuring the compute service
+================================
 
 KVM backend
 -------------------

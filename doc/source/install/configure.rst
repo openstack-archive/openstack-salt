@@ -7,7 +7,6 @@ Chapter 2. Configuration
 
    configure-initial.rst
    configure-infrastructure.rst
-   configure-openstack.rst
    configure-compute.rst
    configure-network.rst
    configure-volume.rst
