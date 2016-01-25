@@ -10,6 +10,7 @@ Check validity of reclass data for entire infrastructure:
 
     reclass-salt --top
 
+It will return service catalog of entire infrastructure.
 
 Get reclass data for specific node:
 
@@ -22,10 +23,12 @@ Verify that all salt minions are accepted at master:
 .. code-block:: bash
 
     root@cfg01:~# salt-key
-    Accepted:
+    Accepted Keys:
     cfg01.workshop.cloudlab.cz
     mtr01.workshop.cloudlab.cz
-    Denied:
+    Denied Keys:
+    Unaccepted Keys:
+    Rejected Keys:
 
 Verify that all Salt minions are responding:
 

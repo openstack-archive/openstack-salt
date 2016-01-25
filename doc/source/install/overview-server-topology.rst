@@ -149,9 +149,6 @@ Instructions for reclass modification
 
   - ``classes/system/graphite`` - set password
 
-
-
-
 --------------
 
 .. include:: navigation.txt
