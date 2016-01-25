@@ -61,6 +61,19 @@ And set the content to the following to setup reclass as salt-master metadata so
     output: yaml
     inventory_base_uri: /srv/salt/reclass
 
+Configure the master service
+
+.. code-block:: bash
+
+  	# Ubuntu
+  	service salt-master restart
+  	# Redhat
+  	systemctl enable salt-master.service
+  	systemctl start salt-master
+
+
+See the `master configuration reference <https://docs.saltstack.com/en/latest/ref/configuration/master.html>`_
+for more details about other configurable options.
 
 --------------
 
