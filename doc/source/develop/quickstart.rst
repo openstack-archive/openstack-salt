@@ -8,6 +8,7 @@ Chapter 1. Quick start
 
    quickstart-vagrant.rst
    quickstart-heat.rst
+   quickstart-ooo-heat.rst
 
 --------------
 

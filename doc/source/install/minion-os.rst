@@ -87,7 +87,7 @@ After updating the configuration files, restart the Salt minion.
 	# Ubuntu
 	service salt-minion restart
 	# Redhat
-	systemctl enable salt-master.service
+	systemctl enable salt-minion.service
 	systemctl start salt-minion
 
 See the `minion configuration reference <https://docs.saltstack.com/en/latest/ref/configuration/minion.html>`_
