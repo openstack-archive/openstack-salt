@@ -17,7 +17,6 @@ interfaces (0.0.0.0). To bind Salt to a specific IP, redefine the
    + interface: 10.0.0.1
 
 After updating the configuration file, restart the Salt master.
-See the :doc:`master configuration reference </ref/configuration/master>`
 for more details about other configurable options.
 Make sure that mentioned ports are open by your network firewall.
 
