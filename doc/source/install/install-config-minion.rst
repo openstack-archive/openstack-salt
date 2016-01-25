@@ -4,13 +4,6 @@ Target nodes installation
 
 On most distributions, you can set up a Salt Minion with the `Salt Bootstrap <https://github.com/saltstack/salt-bootstrap>`_ .
 
-If you're looking for the *one-liner* to install salt, please scroll to the bottom and use the
-instructions for `Installing via an Insecure One-Liner`_.
-
-
-Examples
-~~~~~~~~
-
 .. note::
 
     In every two-step example, you would be well-served to examine the downloaded file and examine
@@ -24,7 +17,6 @@ Using ``curl`` to install latest git:
   curl -L https://bootstrap.saltstack.com -o install_salt.sh
   sudo sh install_salt.sh git develop
 
-
 Using ``wget`` to install your distribution's stable packages:
 
 .. code:: console
@@ -32,18 +24,17 @@ Using ``wget`` to install your distribution's stable packages:
   wget -O install_salt.sh https://bootstrap.saltstack.com
   sudo sh install_salt.sh
 
-
 Install a specific version from git using ``wget``:
 
 .. code:: console
 
   wget -O install_salt.sh https://bootstrap.saltstack.com
-  sudo sh install_salt.sh -P git v0.16.4
+  sudo sh install_salt.sh -P git v2015.5
 
 On the above example we added `-P` which will allow PIP packages to be installed if required but 
 it's no a necessary flag for git based bootstraps.
 
-Minion Configuration
+Basic minion Configuration
 ---------------------------
 
 Salt configuration is very simple. The only requirement for setting up a minion is to set the location of the master in the minion configuration file.
@@ -51,8 +42,8 @@ Salt configuration is very simple. The only requirement for setting up a minion 
 The configuration files will be installed to :file:`/etc/salt` and are named
 after the respective components, :file:`/etc/salt/master`, and :file:`/etc/salt/minion`.
 
-Salt Master location
-~~~~~~~~~~~~~~~~~~~~~
+Setting ``Salt Master host``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Although there are many Salt Minion configuration options, configuring
 a Salt Minion is very simple. By default a Salt Minion will
@@ -68,8 +59,8 @@ configuration file, typically ``/etc/salt/minion``, as follows:
    - #master: salt
    + master: 10.0.0.1
 
-Salt minion id
-~~~~~~~~~~~~~~~
+Setting ``Salt minion ID``
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Then explicitly declare the id for this minion to use. Since Salt uses detached ids it is possible to run multiple minions on the same machine but with different ids.
 
@@ -83,6 +74,7 @@ After updating the configuration files, restart the Salt minion.
 
   # Ubuntu
   service salt-minion restart
+
   # Redhat
   systemctl enable salt-minion.service
   systemctl start salt-minion
