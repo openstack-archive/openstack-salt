@@ -3,10 +3,12 @@
 Chapter 3. Extending
 =====================
 
+
 .. toctree::
 
    extending-formulas.rst
    extending-contribute.rst
+
 
 --------------
 

@@ -58,7 +58,6 @@ And set the content to the following to setup reclass as salt-master metadata so
 
     vim /etc/reclass/reclass-config.yml
 
-
 .. code-block:: yaml
 
     storage_type: yaml_fs

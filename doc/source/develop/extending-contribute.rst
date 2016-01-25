@@ -22,19 +22,22 @@ criteria are met:
 * Steps to reproduce the problem if possible.
 
 Tags
-````
+~~~~
+
 If it's a bug that needs fixing in a branch in addition to master, add a
 '\<release\>-backport-potential' tag (e.g. ``kilo-backport-potential``).
 There are predefined tags that will auto-complete.
 
 Status
-``````
+~~~~~~
+
 Please leave the **status** of an issue alone until someone confirms it or
 a member of the bugs team triages it. While waiting for the issue to be
 confirmed or triaged the status should remain as **New**.
 
 Importance
-``````````
+~~~~~~~~~~
+
 Should only be touched if it is a Blocker/Gating issue. If it is, please
 set to **High**, and only use **Critical** if you have found a bug that
 can take down whole infrastructures. Once the importance has been changed
@@ -42,7 +45,8 @@ the status should be changed to *Triaged* by someone other than the bug
 creator.
 
 Triaging bugs
-`````````````
+~~~~~~~~~~~~~
+
 Reported bugs need prioritization, confirmation, and shouldn't go stale.
 If you care about OpenStack stability but aren't wanting to actively
 develop the roles and playbooks used within the "openstack-salt"
@@ -135,32 +139,32 @@ using the YAML dictionary format.
 
 Example YAML dictionary format:
 
-    .. code-block:: yaml
+.. code-block:: yaml
 
-        - name: The name of the tasks
-          module_name:
-            thing1: "some-stuff"
-            thing2: "some-other-stuff"
-          tags:
-            - some-tag
-            - some-other-tag
+    - name: The name of the tasks
+      module_name:
+        thing1: "some-stuff"
+        thing2: "some-other-stuff"
+      tags:
+        - some-tag
+        - some-other-tag
 
 
 Example what **NOT** to do:
 
-    .. code-block:: yaml
+.. code-block:: yaml
 
-        - name: The name of the tasks
-          module_name: thing1="some-stuff" thing2="some-other-stuff"
-          tags: some-tag
+    - name: The name of the tasks
+      module_name: thing1="some-stuff" thing2="some-other-stuff"
+      tags: some-tag
 
-    .. code-block:: yaml
+.. code-block:: yaml
 
-        - name: The name of the tasks
-          module_name: >
-            thing1="some-stuff"
-            thing2="some-other-stuff"
-          tags: some-tag
+    - name: The name of the tasks
+      module_name: >
+        thing1="some-stuff"
+        thing2="some-other-stuff"
+      tags: some-tag
 
 
 Usage of the ">" and "|" operators should be limited to Salt conditionals

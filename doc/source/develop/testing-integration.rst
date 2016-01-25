@@ -1,6 +1,6 @@
 
 Integration testing
-=====================
+===================
 
 There are requirements, in addition to Salt's requirements, which need to be installed in order to run the test suite. Install the line below.
 

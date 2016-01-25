@@ -2,11 +2,7 @@
 Server Topology
 ==================
 
-
-Production setup role description
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-High availability is key idea for production environments. Therefore Reference Architecture and all components are introduced only in HA mode. This provides replicated servers to prevent single points of failure.
+High availability is the default environment setup. Reference architecture covers only the HA deployment. HA provides replicated servers to prevent single points of failure. Single node deployments are supported for development environments in Vagrant and Heat. 
 
 Production setup consists from several roles of physical nodes:
 
@@ -14,55 +10,58 @@ Production setup consists from several roles of physical nodes:
 * KVM Control cluster
 * Compute nodes
 
+Server role description
+-----------------------
+
 Virtual Machine nodes:
 
 SaltMaster node
-^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~
 
-TCP Master Node contains supporting installation components for deploying OpenStack cloud as Salt Master, git repositories, package repository, etc. TCP Master Node is virtual machine.
+SaltMaster node contains supporting installation components for deploying OpenStack cloud as Salt Master, git repositories, package repository, etc.
 
-OpenStack Controller node
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OpenStack controller nodes
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Controller is fail-over cluster for hosting OpenStack core cloud components (Nova, Neutron, Cinder, Glance), OpenContrail control roles and multi-mastar database for all OpenStack services.
 
-OpenContrail Config node
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OpenContrail controller nodes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 OpenContrail controller is fail-over cluster for hosting OpenContrail Config, Neutron, Control and other services like Cassandra, Zookeeper, Redis, HAProxy, Keepalived fully operated in High Availability.
 
-OpenContrail Analytics node
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OpenContrail analytics node
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 OpenContrail Analytics node is fail-over cluster for OpenContrail analytics.
 
 Database node
-^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~
 
 MySQL Galera nodes contain multi-master database for all OpenStack and Monitoring services.
 
 Telemetry node
-^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~
 
 Ceilometer node is separated from central controllers for better performance, maintenance and upgrades. MongoDB cluster is used for storing telemetry data.
 
 Proxy node
-^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~
 
 This node does proxy for all OpenStack APIs and Dashboards.
 
 Monitoring node
-^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~
 
 This node contains modules for TCP Monitoring, which include Sensu open source monitoring framework, RabbitMQ and KEDB.
 
 Billometer node
-^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~
 
 This node contains modules for TCP Billing, which include Horizon dashboard.
 
 Metering node
-^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~
 
 This node contains Graphite, which is a highly scalable real-time graphing system. It includes Graphite's processing backend - Carbon and fixed-size database - Whisper.
 
@@ -71,7 +70,7 @@ This node contains Graphite, which is a highly scalable real-time graphing syste
   :align: center
 
 Reference Architecture
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. figure:: figures/server_topology.jpg
   :width: 100%
@@ -123,7 +122,7 @@ Reclass model for:
 All hosts are deployed in `workshop.cloudlab.cz` domain.
 
 Instructions for reclass modification
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------
 
 - Fork this repository
 - Make customizations according to your environment:

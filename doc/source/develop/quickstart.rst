@@ -6,9 +6,9 @@ Chapter 1. Quick start
 
 .. toctree::
 
-   quickstart-vagrant.rst
    quickstart-heat.rst
-   quickstart-ooo-heat.rst
+   quickstart-vagrant.rst
+
 
 --------------
 

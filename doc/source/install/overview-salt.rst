@@ -21,11 +21,6 @@ Remote execution principles carry over all aspects of Salt platform. Command are
 - **Target** - Matching minion ID with globbing,  regular expressions, Grains matching, Node groups, compound matching is possible
 - **Function** - Commands haveform: module.function, arguments are YAML formatted, compound commands are possible
 
-Try test run to reach minion
-
-.. code-block:: bash
-
-    salt '*' test.version
 
 Targetting minions
 ~~~~~~~~~~~~~~~~~~
@@ -34,30 +29,39 @@ Examples of different kinds of targetting minions
 
 .. code-block:: bash
 
+    salt '*' test.version
     salt -E '.*' apache.signal restart
     salt -G 'os:Fedora' test.version
     salt '*' cmd.exec_code python 'import sys; print sys.version'
 
-SaltStack commands
-~~~~~~~~~~~~~~~~~~~
 
-Minion facts
+SaltStack commands
+~~~~~~~~~~~~~~~~~~
+
+Minion inner facts
 
 .. code-block:: bash
 
     salt-call grains.items
 
-Minion parameters
+Minion external parameters
 
 .. code-block:: bash
 
     salt-call pillar.data
 
-Sync state
+Run the full configuration catalog
 
 .. code-block:: bash
 
     salt-call state.highstate
+
+Run one given service from catalog
+
+.. code-block:: bash
+
+    salt-call state.sls servicename
+
 
 --------------
 
