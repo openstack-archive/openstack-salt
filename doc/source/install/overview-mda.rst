@@ -1,5 +1,6 @@
-Introduction to MDA
-===================
+
+Model-driven architectures
+==========================
 
 Model Driven Architecture (MDA) is an answer to growing complexity of systems controlled by configuration management tools. It provides unified node classification with atomic service definitions.
 

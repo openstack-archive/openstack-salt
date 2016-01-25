@@ -2,6 +2,8 @@
 Configuring the hypervisors
 ===========================
 
+KVM backend
+-------------------
 
 --------------
 
