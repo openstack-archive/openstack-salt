@@ -1,9 +1,18 @@
+[submodule "formulas/git"]
+	path = formulas/git
+	url = https://github.com/tcpcloud/salt-formula-git.git
 [submodule "formulas/linux"]
 	path = formulas/linux
 	url = https://github.com/tcpcloud/salt-formula-linux.git
+[submodule "formulas/ntp"]
+	path = formulas/ntp
+	url = https://github.com/tcpcloud/salt-formula-ntp.git
 [submodule "formulas/openssh"]
 	path = formulas/openssh
 	url = https://github.com/tcpcloud/salt-formula-openssh.git
+[submodule "formulas/reclass"]
+	path = formulas/reclass
+	url = https://github.com/tcpcloud/salt-formula-reclass.git
 [submodule "formulas/salt"]
 	path = formulas/salt
 	url = https://github.com/tcpcloud/salt-formula-salt.git

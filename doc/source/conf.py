@@ -240,7 +240,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     (master_doc, 'openstack-salt',
-     'openstack-salt Documentation',
+     'OpenStack-Salt Documentation',
      [author], 1)
 ]
 
@@ -255,7 +255,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'openstack-salt',
-     'openstack-salt Documentation',
+     'OpenStack-Salt Documentation',
      author, 'openstack-salt', 'One line description of project.',
      'Miscellaneous'),
 ]
