@@ -1,6 +1,6 @@
 `Home <index.html>`_ OpenStack-Salt Installation Manual
 
-Chapter 5. Install configuration service
+Chapter 3. Install configuration service
 ========================================
 
 .. toctree::

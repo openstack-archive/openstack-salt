@@ -1,6 +1,6 @@
 `Home <index.html>`_ OpenStack-Salt Installation Manual
 
-Chapter 4. Configuration
+Chapter 2. Configuration
 ------------------------
 
 .. toctree::

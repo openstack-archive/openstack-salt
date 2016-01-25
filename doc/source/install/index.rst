@@ -12,21 +12,6 @@ Overview
 
    overview.rst
 
-Config master
-^^^^^^^^^^^^^^^^^^^^
-
-.. toctree::
-
-   master.rst
-
-
-Config minions
-^^^^^^^^^^^^^^^^^^^^^
-
-.. toctree::
-
-   minion.rst
-
 
 Configuration
 ^^^^^^^^^^^^^
