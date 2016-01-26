@@ -190,7 +190,7 @@ Galera cluster master node
 Galera cluster slave node
 *************************
 
-.. code-blowk:: yaml
+.. code-block:: yaml
 
     galera:
       slave:
@@ -287,6 +287,139 @@ Galera monitoring command, performed from extra server
 .. code-block:: bash
 
     mysql> SET GLOBAL wsrep_cluster_address='gcomm://10.0.0.2';
+
+Metering database (Graphite)
+----------------------------
+
+1. Set up the monitoring node for metering.
+
+.. code-block:: bash
+
+    root@cfg01:~# salt 'mon01*' state.sls git,rabbitmq,postgresql
+    root@cfg01:~# salt 'mon01*' state.sls graphite,apache
+
+2. Make some manual adjustments.
+
+.. code-block:: bash
+
+    root@mon01:~# service carbon-aggregator start
+    root@mon01:~# apt-get install python-django=1.6.1-2ubuntu0.11
+    root@mon01:~# service apache2 restart
+
+3. Update all client nodes in infrastructure for metrics service.
+
+.. code-block:: bash
+
+    root@cfg01:~# salt "*" state.sls collectd.client
+
+4. Check the browser for the metering service output
+
+    http://185.22.97.69:8080
+
+Monitoring server (Sensu)
+-------------------------
+
+Instalation
+***********
+
+1. Set up the monitoring node.
+
+.. code-block:: bash
+
+    root@cfg01:~# salt 'mon01*' state.sls git,rabbitmq,redis
+    root@cfg01:~# salt 'mon01*' state.sls sensu
+
+2. Update all client nodes in infrastructure.
+
+.. code-block:: bash
+
+    root@cfg01:~# salt "*" state.sls sensu.client
+
+3. Update check defitions based on model on Sensu server.
+
+.. code-block:: bash
+
+    root@cfg01:~# salt "*" state.sls sensu.client
+    root@cfg01:~# salt "*" state.sls salt
+    root@cfg01:~# salt "*" mine.flush
+    root@cfg01:~# salt "*" mine.update
+    root@cfg01:~# salt "*" service.restart salt-minion
+    root@cfg01:~# salt "mon*" state.sls sensu.server
+
+    # as 1-liner
+
+    salt "*" state.sls sensu.client; salt "*" state.sls salt.minion; salt "*" mine.flush; salt "*" mine.update; salt "*" service.restart salt-minion; salt "mon*" state.sls sensu.server
+
+    salt 'mon*' service.restart rabbimq-server; salt 'mon*' service.restart sensu-server; salt 'mon*' service.restart sensu-api; salt '*' service.restart sensu-client
+
+4. View the monitored infrastructure in web user interface.
+
+.. code-block:: bash
+
+    http://185.22.97.69:8088
+
+Creating checks
+---------------
+
+Check can be created in 2 separate ways.
+
+Service driven checks
+*********************
+
+Checks are created and populated by existing services. Check definition is stored at ``formula_name/files/sensu.conf``. For example SSH service creates check that checks running process.
+
+.. code-block:: yaml
+
+    local_openssh_server_proc:
+      command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -a '/usr/sbin/sshd' -u root -c 1:1"
+      interval: 60
+      occurrences: 1
+      subscribers:
+      - local-openssh-server
+
+Arbitrary check definitions
+***************************
+
+These checks are custom created from definition files located in ``system.sensu.server.checks``, this class must be included in monitoring node definition.
+
+.. code-block:: yaml
+
+    parameters:
+      sensu:
+        server:
+          checks:
+          - name: local_service_name_proc
+            command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -C service-name"
+            interval: 60
+            occurrences: 1
+            subscribers:
+            - local-service-name-server
+
+Create file ``/etc/sensu/conf.d/check_graphite.json``:
+
+.. code-block:: yaml
+
+    {
+      "checks": {
+        "remote_graphite_users": {
+          "subscribers": [
+            "remote-network"
+          ],
+          "command": "~/sensu-plugins-graphite/bin/check-graphite-stats.rb --host 127.0.0.1 --period -2mins --target 'default_prd.*.users.users'  --warn 1 --crit 2",
+          "handlers": [
+            "default"
+          ],
+          "occurrences": 1,
+          "interval": 30
+        }
+      }
+    }
+
+Restart sensu-server
+
+.. code-block:: bash
+
+    root@mon01:~# service sensu-server restart
         
 --------------
     

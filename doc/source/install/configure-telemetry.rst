@@ -8,7 +8,7 @@ Control nodes
 Ceilometer API
 **************
 
-.. code-black:: yaml
+.. code-block:: yaml
 
     ceilometer:
       server:
