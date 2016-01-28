@@ -11,21 +11,21 @@ boxes = {
 
 Vagrant.configure("2") do |config|
 
-  config.vm.define :config_vm do |config_vm|
+  config.vm.define :openstack_config do |openstack_config|
 
-    config_vm.vm.hostname = 'config.openstack.local'
-    config_vm.vm.box = 'virtualbox-ubuntu1404-salt'
-    config_vm.vm.box_url = boxes['virtualbox-ubuntu1404-salt']['url']
-    config_vm.vm.network :private_network, ip: "10.10.10.200"
+    openstack_config.vm.hostname = 'config.openstack.local'
+    openstack_config.vm.box = 'virtualbox-ubuntu1404-salt'
+    openstack_config.vm.box_url = boxes['virtualbox-ubuntu1404-salt']['url']
+    openstack_config.vm.network :private_network, ip: "10.10.10.200"
 
-    config_vm.vm.provider :virtualbox do |vb|
+    openstack_config.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", 512]
       vb.customize ["modifyvm", :id, "--cpus", 1]
       vb.name = 'openstack-config'
       vb.gui = false
     end
 
-    config_vm.vm.provision :salt do |salt|
+    openstack_config.vm.provision :salt do |salt|
       salt.minion_config = "/srv/vagrant-openstack/minion/compute.conf"
       salt.colorize = true
       salt.bootstrap_options = "-F -c /tmp -P"
@@ -33,21 +33,21 @@ Vagrant.configure("2") do |config|
   
   end
 
-  config.vm.define :control_vm do |control_vm|
+  config.vm.define :openstack_control do |openstack_control|
 
-    control_vm.vm.hostname = 'control.openstack.local'
-    control_vm.vm.box = 'virtualbox-ubuntu1404-salt'
-    control_vm.vm.box_url = boxes['virtualbox-ubuntu1404-salt']['url']
-    control_vm.vm.network :private_network, ip: "10.10.10.201"
+    openstack_control.vm.hostname = 'control.openstack.local'
+    openstack_control.vm.box = 'virtualbox-ubuntu1404-salt'
+    openstack_control.vm.box_url = boxes['virtualbox-ubuntu1404-salt']['url']
+    openstack_control.vm.network :private_network, ip: "10.10.10.201"
 
-    control_vm.vm.provider :virtualbox do |vb|
+    openstack_control.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", 4096]
       vb.customize ["modifyvm", :id, "--cpus", 1]
       vb.name = 'openstack-control'
       vb.gui = false
     end
 
-    control_vm.vm.provision :salt do |salt|
+    openstack_control.vm.provision :salt do |salt|
       salt.minion_config = "/srv/vagrant-openstack/minion/control.conf"
       salt.colorize = true
       salt.bootstrap_options = "-F -c /tmp -P"
@@ -55,21 +55,21 @@ Vagrant.configure("2") do |config|
   
   end
 
-  config.vm.define :compute_vm do |compute_vm|
+  config.vm.define :openstack_compute do |openstack_compute|
 
-    compute_vm.vm.hostname = 'compute.openstack.local'
-    compute_vm.vm.box = 'virtualbox-ubuntu1404-salt'
-    compute_vm.vm.box_url = boxes['virtualbox-ubuntu1404-salt']['url']
-    compute_vm.vm.network :private_network, ip: "10.10.10.202"
+    openstack_compute.vm.hostname = 'compute.openstack.local'
+    openstack_compute.vm.box = 'virtualbox-ubuntu1404-salt'
+    openstack_compute.vm.box_url = boxes['virtualbox-ubuntu1404-salt']['url']
+    openstack_compute.vm.network :private_network, ip: "10.10.10.202"
 
-    compute_vm.vm.provider :virtualbox do |vb|
+    openstack_compute.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", 1024]
       vb.customize ["modifyvm", :id, "--cpus", 1]
       vb.name = 'openstack-compute'
       vb.gui = false
     end
 
-    compute_vm.vm.provision :salt do |salt|
+    openstack_compute.vm.provision :salt do |salt|
       salt.minion_config = "/srv/vagrant-openstack/minion/compute.conf"
       salt.colorize = true
       salt.bootstrap_options = "-F -c /tmp -P"
