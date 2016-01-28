@@ -124,5 +124,13 @@ Now bootstrap the salt master service on the config node, get the salt master bo
 
     $ sh bootstrap-salt-master.sh
 
+
+Now we setup openstack control node. Launch the control node using vagrant command:
+
+.. code-block:: bash
+
+    $ vagrant up openstack_control
+
+
 .. _hardware-assisted virtualization: https://en.wikipedia.org/wiki/Hardware-assisted_virtualization
 .. _Vagrant downloads page: https://www.vagrantup.com/downloads.html
