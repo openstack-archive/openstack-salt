@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Preparing base OS"
-which wget >/dev/null || (apt-get update; apt-get install -y wget)
+which wget > /dev/null || (apt-get update; apt-get install -y wget)
 
 echo "deb [arch=amd64] http://apt.tcpcloud.eu/nightly/ trusty main security extra tcp tcp-salt" > /etc/apt/sources.list
 wget -O - http://apt.tcpcloud.eu/public.gpg | apt-key add -
@@ -12,7 +12,7 @@ echo "Configuring salt master ..."
 apt-get install -y salt-master
 apt-get install -y salt-formula-linux salt-formula-reclass salt-formula-salt salt-formula-openssh salt-formula-ntp salt-formula-git salt-formula-graphite salt-formula-collectd salt-formula-sensu salt-formula-heka
 
-cat << 'EOF' >> /etc/salt/master.d/master.conf
+cat << 'EOF' > /etc/salt/master.d/master.conf
 file_roots:
   base:
   - /usr/share/salt-formulas/env
@@ -36,7 +36,7 @@ for i in /usr/share/salt-formulas/reclass/service/*; do
 done
 
 [ ! -d /etc/reclass ] && mkdir /etc/reclass
-cat << 'EOF' >> /etc/reclass/reclass-config.yml
+cat << 'EOF' > /etc/reclass/reclass-config.yml
 storage_type: yaml_fs
 pretty_print: True
 output: yaml
@@ -46,7 +46,7 @@ EOF
 echo "Configuring salt minion ..."
 apt-get install -y salt-minion
 [ ! -d /etc/salt/minion.d ] && mkdir -p /etc/salt/minion.d
-cat << "EOF" >> /etc/salt/minion.d/minion.conf
+cat << "EOF" > /etc/salt/minion.d/minion.conf
 id: $CONFIG_HOST
 master: localhost
 EOF
@@ -62,6 +62,6 @@ salt-call --no-color pillar.data
 reclass -n $CONFIG_HOST
 
 echo "Running complete state ..."
-salt-call --no-color state.sls linux openssh salt.minion
+salt-call --no-color state.sls linux,openssh,salt.minion
 salt-call --no-color state.sls salt.master
 salt-call --no-color state.highstate
