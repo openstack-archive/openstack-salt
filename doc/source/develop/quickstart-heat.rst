@@ -1,7 +1,7 @@
 `Home <index.html>`_ OpenStack-Salt Development Documentation
 
-Heat Stack deployment
-=====================
+OpenStack-Salt Heat deployment
+==============================
 
 All-in-one (AIO) deployments are a great way to setup an OpenStack-Salt cloud for:
 
