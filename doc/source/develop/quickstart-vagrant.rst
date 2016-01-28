@@ -84,16 +84,26 @@ Set ``/srv/vagrant-openstack/compute.conf`` to following content:
 Vagrant configuration file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Tve main vagrant configuration for OpenStack-Salt deployment is located at ``/srv/vagrant-openstack/Vagrantfile``.
+The main vagrant configuration for OpenStack-Salt deployment is located at ``/srv/vagrant-openstack/Vagrantfile``.
 
 .. literalinclude:: ../../../scripts/vagrant-openstack/Vagrantfile
    :language: ruby
    :linenos:
 
+
+Salt master bootstrap file
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The salt-master bootstrap is located at ``/srv/vagrant-openstack/bootstrap-salt-master.sh`` and it needs to be placed at the vagrant-openstack folder to be accessible from the virtual machine.
+
+.. literalinclude:: ../../../scripts/vagrant-openstack/bootstrap-salt-master.sh
+   :language: bash
+   :linenos:
+
 Launching the Vagrant nodes
 ---------------------------
 
-Check the configuration of the deployment
+Check the status of the deployment environment.
 
 .. code-block:: bash
 
@@ -106,30 +116,31 @@ Check the configuration of the deployment
     openstack_control         not created (virtualbox)
     openstack_compute         not created (virtualbox)
 
-First we setup openstack config node. Launch the node using vagrant command:
+Setup OpenStack-Salt config node, launch it and connect to it using following commands:
 
 .. code-block:: bash
 
     $ vagrant up openstack_config
     $ vagrant ssh openstack_config
 
-Now bootstrap the salt master service on the config node, get the salt master bootstrap script, configure it with parameters.
+Bootstrap the salt master service on the config node, configure it with following parameters.
 
 .. code-block:: bash
 
-    $ wget bootstrap-salt-master-pkg.sh
+    $ cd /vagrant
 
     $ export RECLASS_ADDRESS=https://github.com/tcpcloud/workshop-salt-model.git
     $ export CONFIG_HOST=config.openstack.local
 
-    $ sh bootstrap-salt-master.sh
+    $ bash bootstrap-salt-master.sh
 
 
-Now we setup openstack control node. Launch the control node using vagrant command:
+Now setup th OpenStack-Salt control node. Launch the control node using following vagrant command:
 
 .. code-block:: bash
 
     $ vagrant up openstack_control
+    $ vagrant provision openstack_control
 
 
 .. _hardware-assisted virtualization: https://en.wikipedia.org/wiki/Hardware-assisted_virtualization
