@@ -75,11 +75,23 @@ This configuration is positioned at ``/srv/vagrant-openstack/Vagrantfile``.
 Launching the Vagrant nodes
 ---------------------------
 
-First we setup openstack config node. Launch the node using vagrant command:
+Check the configuration of the deployment
 
 .. code-block:: bash
 
     $ cd /srv/vagrant-openstack
+    $ vagrant status
+    
+    Current machine states:
+
+    openstack_config          not created (virtualbox)
+    openstack_control         not created (virtualbox)
+    openstack_compute         not created (virtualbox)
+
+First we setup openstack config node. Launch the node using vagrant command:
+
+.. code-block:: bash
+
     $ vagrant up openstack_config
     $ vagrant ssh openstack_config
 
