@@ -1,11 +1,10 @@
-
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
 boxes = {
-  'virtualbox-ubuntu1404-salt' => {
-    'name'  => 'virtualbox-ubuntu1404-salt',
-    'url'   => 'file:///srv/packer/build/virtualbox/ubuntu1404-salt-current.box'
+  'boxcutter/ubuntu1404' => {
+    'name'  => 'boxcutter/ubuntu1404',
+    'url'   => 'boxcutter/ubuntu1404'
   },
 }
 
@@ -14,8 +13,8 @@ Vagrant.configure("2") do |config|
   config.vm.define :openstack_config do |openstack_config|
 
     openstack_config.vm.hostname = 'config.openstack.local'
-    openstack_config.vm.box = 'virtualbox-ubuntu1404-salt'
-    openstack_config.vm.box_url = boxes['virtualbox-ubuntu1404-salt']['url']
+    openstack_config.vm.box = 'boxcutter/ubuntu1404'
+    openstack_config.vm.box_url = boxes['boxcutter/ubuntu1404']['url']
     openstack_config.vm.network :private_network, ip: "10.10.10.200"
 
     openstack_config.vm.provider :virtualbox do |vb|
@@ -26,7 +25,7 @@ Vagrant.configure("2") do |config|
     end
 
     openstack_config.vm.provision :salt do |salt|
-      salt.minion_config = "/srv/vagrant-openstack/minion/compute.conf"
+      salt.minion_config = "control.conf"
       salt.colorize = true
       salt.bootstrap_options = "-F -c /tmp -P"
     end
@@ -36,8 +35,8 @@ Vagrant.configure("2") do |config|
   config.vm.define :openstack_control do |openstack_control|
 
     openstack_control.vm.hostname = 'control.openstack.local'
-    openstack_control.vm.box = 'virtualbox-ubuntu1404-salt'
-    openstack_control.vm.box_url = boxes['virtualbox-ubuntu1404-salt']['url']
+    openstack_control.vm.box = 'boxcutter/ubuntu1404'
+    openstack_control.vm.box_url = boxes['boxcutter/ubuntu1404']['url']
     openstack_control.vm.network :private_network, ip: "10.10.10.201"
 
     openstack_control.vm.provider :virtualbox do |vb|
@@ -48,7 +47,7 @@ Vagrant.configure("2") do |config|
     end
 
     openstack_control.vm.provision :salt do |salt|
-      salt.minion_config = "/srv/vagrant-openstack/minion/control.conf"
+      salt.minion_config = "control.conf"
       salt.colorize = true
       salt.bootstrap_options = "-F -c /tmp -P"
     end
@@ -58,8 +57,8 @@ Vagrant.configure("2") do |config|
   config.vm.define :openstack_compute do |openstack_compute|
 
     openstack_compute.vm.hostname = 'compute.openstack.local'
-    openstack_compute.vm.box = 'virtualbox-ubuntu1404-salt'
-    openstack_compute.vm.box_url = boxes['virtualbox-ubuntu1404-salt']['url']
+    openstack_compute.vm.box = 'boxcutter/ubuntu1404'
+    openstack_compute.vm.box_url = boxes['boxcutter/ubuntu1404']['url']
     openstack_compute.vm.network :private_network, ip: "10.10.10.202"
 
     openstack_compute.vm.provider :virtualbox do |vb|
@@ -70,7 +69,7 @@ Vagrant.configure("2") do |config|
     end
 
     openstack_compute.vm.provision :salt do |salt|
-      salt.minion_config = "/srv/vagrant-openstack/minion/compute.conf"
+      salt.minion_config = "compute.conf"
       salt.colorize = true
       salt.bootstrap_options = "-F -c /tmp -P"
     end

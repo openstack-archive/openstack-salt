@@ -30,6 +30,27 @@ First we will install vagrant-salt plugin for minion configuration.
 
    $ vagrant plugin install vagrant-salt
 
+Add the generic ubuntu1404 image, this applies for parallels, virtualbox and vmware_desktop virtualizations.
+
+.. code-block:: bash
+
+	$ vagrant box add boxcutter/ubuntu1404
+
+	==> box: Loading metadata for box 'boxcutter/ubuntu1404'
+	    box: URL: https://atlas.hashicorp.com/boxcutter/ubuntu1404
+	This box can work with multiple providers! The providers that it
+	can work with are listed below. Please review the list and choose
+	the provider you will be working with.
+
+	1) parallels
+	2) virtualbox
+	3) vmware_desktop
+
+	$ Enter your choice: 2
+
+	==> box: Adding box 'boxcutter/ubuntu1404' (v2.0.13) for provider: virtualbox
+	    box: Downloading: https://atlas.hashicorp.com/boxcutter/boxes/ubuntu1404/versions/2.0.13/providers/virtualbox.box
+	==> box: Successfully added box 'boxcutter/ubuntu1404' (v2.0.13) for 'virtualbox'!
 
 Environment setup 
 -----------------
@@ -45,28 +66,25 @@ Minion configuration files
 
 Prepare basic configuration files for each node deployed.
 
-Set ``/srv/vagrant-openstack/minion/config.conf`` to following:
+Set ``/srv/vagrant-openstack/config.conf`` to following:
 
 .. literalinclude:: ../../../scripts/vagrant-openstack/config.conf
    :language: yaml
-   :linenos:
 
-Set ``/srv/vagrant-openstack/minion/control.conf`` to following:
+Set ``/srv/vagrant-openstack/control.conf`` to following:
 
 .. literalinclude:: ../../../scripts/vagrant-openstack/control.conf
    :language: yaml
-   :linenos:
 
-Set ``/srv/vagrant-openstack/minion/compute.conf`` to following content:
+Set ``/srv/vagrant-openstack/compute.conf`` to following content:
 
 .. literalinclude:: ../../../scripts/vagrant-openstack/compute.conf
    :language: yaml
-   :linenos:
 
 Vagrant configuration file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This configuration is positioned at ``/srv/vagrant-openstack/Vagrantfile``.
+Tve main vagrant configuration for OpenStack-Salt deployment is located at ``/srv/vagrant-openstack/Vagrantfile``.
 
 .. literalinclude:: ../../../scripts/vagrant-openstack/Vagrantfile
    :language: ruby
@@ -95,10 +113,16 @@ First we setup openstack config node. Launch the node using vagrant command:
     $ vagrant up openstack_config
     $ vagrant ssh openstack_config
 
+Now bootstrap the salt master service on the config node, get the salt master bootstrap script, configure it with parameters.
+
 .. code-block:: bash
 
-    $ cd /srv/vagrant-openstack
-    $ vagrant show
+    $ wget bootstrap-salt-master-pkg.sh
+
+    $ export RECLASS_ADDRESS=https://github.com/tcpcloud/workshop-salt-model.git
+    $ export CONFIG_HOST=config.openstack.local
+
+    $ sh bootstrap-salt-master.sh
 
 .. _hardware-assisted virtualization: https://en.wikipedia.org/wiki/Hardware-assisted_virtualization
 .. _Vagrant downloads page: https://www.vagrantup.com/downloads.html
