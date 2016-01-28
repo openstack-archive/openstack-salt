@@ -46,7 +46,7 @@ EOF
 echo "Configuring salt minion ..."
 apt-get install -y salt-minion
 [ ! -d /etc/salt/minion.d ] && mkdir -p /etc/salt/minion.d
-cat << "EOF" > /etc/salt/minion.d/minion.conf
+cat << EOF > /etc/salt/minion.d/minion.conf
 id: $CONFIG_HOST
 master: localhost
 EOF
