@@ -1,7 +1,7 @@
 `Home <index.html>`_ OpenStack-Salt Development Documentation
 
-OpenStack-Salt AIO Vagrant deployment
-=====================================
+OpenStack-Salt Vagrant deployment
+=================================
 
 All-in-one (AIO) deployments are a great way to setup an OpenStack-Salt cloud for:
 
@@ -58,19 +58,19 @@ Minion configuration files
 
 Prepare basic configuration files for each node deployed.
 
-Set ``/srv/vagrant-openstack/config.conf`` to following:
+Set ``/srv/vagrant-openstack/minions/config.conf`` to following:
 
-.. literalinclude:: ../../../scripts/vagrant-openstack/config.conf
+.. literalinclude:: ../../../scripts/minions/config.conf
    :language: yaml
 
-Set ``/srv/vagrant-openstack/control.conf`` to following:
+Set ``/srv/vagrant-openstack/minions/control.conf`` to following:
 
-.. literalinclude:: ../../../scripts/vagrant-openstack/control.conf
+.. literalinclude:: ../../../scripts/minions/control.conf
    :language: yaml
 
-Set ``/srv/vagrant-openstack/compute.conf`` to following content:
+Set ``/srv/vagrant-openstack/minions/compute.conf`` to following content:
 
-.. literalinclude:: ../../../scripts/vagrant-openstack/compute.conf
+.. literalinclude:: ../../../scripts/minions/compute.conf
    :language: yaml
 
 
@@ -79,7 +79,7 @@ Vagrant configuration file
 
 The main vagrant configuration for OpenStack-Salt deployment is located at ``/srv/vagrant-openstack/Vagrantfile``.
 
-.. literalinclude:: ../../../scripts/vagrant-openstack/Vagrantfile
+.. literalinclude:: ../../../scripts/Vagrantfile
    :language: ruby
 
 
@@ -88,7 +88,7 @@ Salt master bootstrap file
 
 The salt-master bootstrap is located at ``/srv/vagrant-openstack/bootstrap-salt-master.sh`` and it needs to be placed at the vagrant-openstack folder to be accessible from the virtual machine.
 
-.. literalinclude:: ../../../scripts/vagrant-openstack/bootstrap-salt-master.sh
+.. literalinclude:: ../../../scripts/bootstrap-salt-master-pkg.sh
    :language: bash
 
 
@@ -108,14 +108,14 @@ Check the status of the deployment environment.
     openstack_control         not created (virtualbox)
     openstack_compute         not created (virtualbox)
 
-Setup OpenStack-Salt config node, launch it and connect to it using following commands:
+Setup OpenStack-Salt config node, launch it and connect to it using following commands, it cannot be provisioned by vagrant salt, as the salt master is not configured yet.
 
 .. code-block:: bash
 
     $ vagrant up openstack_config
     $ vagrant ssh openstack_config
 
-Bootstrap the salt master service on the config node, configure it with following parameters.
+Bootstrap the salt master service on the config node, it can be configured with following parameters:
 
 .. code-block:: bash
 
@@ -124,9 +124,15 @@ Bootstrap the salt master service on the config node, configure it with followin
     $ export RECLASS_ADDRESS=https://github.com/tcpcloud/workshop-salt-model.git
     $ export CONFIG_HOST=config.openstack.local
 
-    $ bash bootstrap-salt-master.sh
+    # to deploy salt-master from packages, run:
 
-Now setup th OpenStack-Salt control node. Launch the control node using following vagrant command:
+    $ ./bootstrap-salt-master-pkg.sh
+
+    # to deploy salt-master from git, run:
+
+    $ ./bootstrap-salt-master-git.sh
+
+Now setup the OpenStack-Salt control node. Launch it and provision using following command:
 
 .. code-block:: bash
 

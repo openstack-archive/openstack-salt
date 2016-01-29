@@ -1,12 +1,8 @@
 #!/bin/bash
 
-if [ -z "$CONFIG_HOST" ]; then
-    export CONFIG_HOST = 'config'
-fi
+CONFIG_HOST=${CONFIG_HOST:-config.openstack.local}
 
-if [ -z "$RECLASS_ADDRESS" ]; then
-    export RECLASS_ADDRESS = 'https://github.com/tcpcloud/workshop-salt-model.git'
-fi
+RECLASS_ADDRESS=${RECLASS_ADDRESS:-https://github.com/tcpcloud/workshop-salt-model.git}
 
 echo "Preparing base OS"
 which wget > /dev/null || (apt-get update; apt-get install -y wget)
