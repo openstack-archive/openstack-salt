@@ -10,7 +10,7 @@
 build/
 dist/
 doc/build/
-scripts/vagrant-openstack/.vagrant/
+scripts/.vagrant/
 
 # Packages #
 ############

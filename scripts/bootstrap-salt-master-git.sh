@@ -1,4 +1,20 @@
 #!/bin/bash
+
+if [ -z "$CONFIG_HOST" ]; then
+    export CONFIG_HOST = 'config'
+fi
+
+if [ -z "$RECLASS_ADDRESS" ]; then
+    export RECLASS_ADDRESS = 'https://github.com/tcpcloud/workshop-salt-model.git'
+fi
+
+echo "Preparing base OS"
+which wget > /dev/null || (apt-get update; apt-get install -y wget)
+
+echo "deb [arch=amd64] http://apt.tcpcloud.eu/nightly/ trusty main security extra tcp tcp-salt" > /etc/apt/sources.list
+wget -O - http://apt.tcpcloud.eu/public.gpg | apt-key add -
+
+apt-get clean
 apt-get update
 
 echo "Configuring salt master ..."

@@ -1,4 +1,13 @@
 #!/bin/bash
+
+if [ -z "$CONFIG_HOST" ]; then
+    export CONFIG_HOST = 'config'
+fi
+
+if [ -z "$RECLASS_ADDRESS" ]; then
+    export RECLASS_ADDRESS = 'https://github.com/tcpcloud/workshop-salt-model.git'
+fi
+
 echo "Preparing base OS"
 which wget > /dev/null || (apt-get update; apt-get install -y wget)
 
