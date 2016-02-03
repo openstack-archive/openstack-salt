@@ -139,5 +139,19 @@ Now setup the OpenStack-Salt control node. Launch it and provision using followi
     $ vagrant up openstack_control
     $ vagrant provision openstack_control
 
+Now setup the OpenStack-Salt compute node. Launch it and provision using following command:
+
+.. code-block:: bash
+
+    $ vagrant up openstack_compute
+    $ vagrant provision openstack_compute
+
+The installation is now over, you should be able to access the user interface of cloud deployment at
+
 .. _hardware-assisted virtualization: https://en.wikipedia.org/wiki/Hardware-assisted_virtualization
 .. _Vagrant downloads page: https://www.vagrantup.com/downloads.html
+
+
+--------------
+
+.. include:: navigation.txt

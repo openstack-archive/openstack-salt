@@ -1,7 +1,7 @@
 
 ============================
-Configuration Node Setup
-============================
+Configuration node setup
+========================
 
 
 Configuring the operating system
@@ -104,7 +104,6 @@ Instalation is tested on Ubuntu Linux 12.04/14.04, but should work on any distri
 You should keep Salt components at current stable version.
 
 
-
 Configuring Secure Shell (SSH) keys
 ===================================
 
@@ -136,7 +135,6 @@ Get the core formulas from git repository server needed to setup the rest.
     git clone git@github.com:tcpcloud/salt-formula-salt.git /srv/salt/env/dev/salt -b develop
     git clone git@github.com:tcpcloud/salt-formula-openssh.git /srv/salt/env/dev/openssh -b develop
     git clone git@github.com:tcpcloud/salt-formula-git.git /srv/salt/env/dev/git -b develop
-
 
 
 --------------

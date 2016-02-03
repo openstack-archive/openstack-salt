@@ -3,7 +3,7 @@
 OpenStack Salt
 ==============
 
-openstack-salt is an `official OpenStack project`_ which aims to deploy production environments from source in a way that makes it scalable while also being simple to operate and upgrade.
+OpenStack-Salt is project which aims to deploy production environments from source in a way that makes it scalable while also being simple to operate and upgrade.
 
 For an overview of the mission, repositories and related Wiki home page, please see the formal `Home Page`_ for the project.
 
@@ -18,7 +18,6 @@ Developers wishing to work on the OpenStack Salt project should always base thei
 If you have some questions, or would like some assistance with achieving your goals, then please feel free to reach out to us on the
 `OpenStack Mailing Lists`_ (particularly openstack-operators or openstack-dev) or on IRC in ``#openstack-salt`` on the `freenode network`_.
 
-.. _official OpenStack project: http://governance.openstack.org/reference/projects/index.html
 .. _Home Page: http://governance.openstack.org/reference/projects/openstacksalt.html
 .. _Install Guide: http://docs.openstack.org/developer/openstack-salt/install-guide/index.html
 .. _Quick Start: http://docs.openstack.org/developer/openstack-salt/developer-docs/quickstart.html

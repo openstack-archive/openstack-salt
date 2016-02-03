@@ -1,20 +1,20 @@
 
-Pillars classification
-=========================
+Service classification
+======================
 
-Pillar is an interface for Salt designed to offer global values that can be distributed to all minions. Pillar data is managed in a similar way as the Salt State Tree.
+Pillar is an interface for Salt designed to offer global values that are distributed to all minions. The ext_pillar option allows for any number of external pillar interfaces to be called to populate the pillar data.
 
 Pillar metadata
 ---------------
 
-TODO
+Pillar data is managed in a similar way as the Salt State Tree. It is the default metadata source for 
 
-Reclass database
-----------------
+Reclass reclass
+---------------
 
-reclass is an “external node classifier” (ENC) has ability to merge data sources recursively.
+Reclass is an “external node classifier” (ENC) for Salt, Ansible or Puppet and has ability to merge data sources in recursive way and interpolate variables. I
 
-Install reclass
+reclass installation
 ~~~~~~~~~~~~~~~~~~
 
 First we will install the application and then configure it.
@@ -38,21 +38,6 @@ And set the content to the following to setup reclass as salt-master metadata so
     inventory_base_uri: /srv/salt/reclass
 
 To test reclass you can use CLI to get the complete service catalog or 
-
-Connect salt-minion to master
------------------------------
-
-Restart the minion
-
-.. code-block:: bash
-
-    service salt-minion restart
-   
-Accept salt-minion key on master
-
-.. code-block:: bash
-
-    salt-key -A
 
 
 --------------

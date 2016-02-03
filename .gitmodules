@@ -1,18 +1,27 @@
-[submodule "formulas/git"]
-	path = formulas/git
-	url = https://github.com/tcpcloud/salt-formula-git.git
-[submodule "formulas/linux"]
-	path = formulas/linux
-	url = https://github.com/tcpcloud/salt-formula-linux.git
-[submodule "formulas/ntp"]
-	path = formulas/ntp
-	url = https://github.com/tcpcloud/salt-formula-ntp.git
-[submodule "formulas/openssh"]
-	path = formulas/openssh
-	url = https://github.com/tcpcloud/salt-formula-openssh.git
-[submodule "formulas/reclass"]
-	path = formulas/reclass
-	url = https://github.com/tcpcloud/salt-formula-reclass.git
-[submodule "formulas/salt"]
-	path = formulas/salt
-	url = https://github.com/tcpcloud/salt-formula-salt.git
+[submodule "formulas/ceilometer"]
+	path = formulas/ceilometer
+	url = https://github.com/openstack/salt-formula-ceilometer.git
+[submodule "formulas/cinder"]
+	path = formulas/cinder
+	url = https://github.com/openstack/salt-formula-cinder.git
+[submodule "formulas/glance"]
+	path = formulas/glance
+	url = https://github.com/openstack/salt-formula-glance.git
+[submodule "formulas/heat"]
+	path = formulas/heat
+	url = https://github.com/openstack/salt-formula-heat.git
+[submodule "formulas/horizon"]
+	path = formulas/horizon
+	url = https://github.com/openstack/salt-formula-horizon.git
+[submodule "formulas/keystone"]
+	path = formulas/keystone
+	url = https://github.com/openstack/salt-formula-keystone.git
+[submodule "formulas/neutron"]
+	path = formulas/neutron
+	url = https://github.com/openstack/salt-formula-neutron.git
+[submodule "formulas/nova"]
+	path = formulas/nova
+	url = https://github.com/openstack/salt-formula-nova.git
+[submodule "formulas/opencontrail"]
+	path = formulas/opencontrail
+	url = https://github.com/openstack/salt-formula-opencontrail.git
