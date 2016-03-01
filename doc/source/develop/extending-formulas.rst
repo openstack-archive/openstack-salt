@@ -1,7 +1,7 @@
 `Home <index.html>`_ OpenStack-Salt Development Documentation
 
-Formulas
-========
+Formula guidelines
+==================
 
 The OpenStack-Salt formulas are stored in the formulas directory `/usr/share/salt-formulas/env`.
 

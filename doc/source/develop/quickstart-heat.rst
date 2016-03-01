@@ -20,20 +20,79 @@ The single-node deployment has following requirements:
 * 16GB RAM
 
 
-List of available stacks
+Available Heat templates
 ------------------------
 
-The `OpenStack-Salt heat templates repository`_ contains several repositories to help installing cloud deployments. We have prepared several basic deployment setups, summarised in the table below:
+The `OpenStack-Salt heat templates repository`_ contains several repositories to help installing cloud deployments in OpenStack. We have prepared several basic deployment setups, summarised in the table below:
 
 .. list-table::
    :stub-columns: 1
 
-   *  - salt_single
-      - Single configuration node
-   *  - openstack_single
-      - Single-node OpenStack deployment, requires ``salt_single``
-   *  - openstack_cluster
-      - HA Cluster OpenStack deployment, requires ``salt_single``
+   *  - **HOT template**
+      - **Description**
+      - **Status**
+   *  - openstack_salt_ubuntu_cluster
+      - HA Cluster OpenStack deployment on Ubuntu
+      - Stable
+   *  - openstack_salt_ubuntu_single
+      - Single-node OpenStack deployment on Ubuntu
+      - Testing
+   *  - openstack_salt_redhat_single
+      - Single-node OpenStack deployment on RedHat
+      - Experimental
+
+
+Openstack-salt single setup
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``openstack_salt_ubuntu_single`` environment consists of three nodes.
+
+.. list-table::
+   :stub-columns: 1
+
+   *  - **FQDN**
+      - **Role**
+      - **IP**
+   *  - config.openstack.local
+      - Salt master node
+      - 10.10.10.200
+   *  - control.openstack.local
+      - OpenStack control node
+      - 10.10.10.201
+   *  - compute.openstack.local
+      - OpenStack compute node
+      - 10.10.10.202
+
+
+Openstack-salt cluster setup
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``openstack_salt_ubuntu_cluster`` environment consists of six nodes.
+
+.. list-table::
+   :stub-columns: 1
+
+   *  - **FQDN**
+      - **Role**
+      - **IP**
+   *  - config.openstack.local
+      - Salt master node
+      - 10.10.10.200
+   *  - control01.openstack.local
+      - OpenStack control node
+      - 10.10.10.201
+   *  - control02.openstack.local
+      - OpenStack control node
+      - 10.10.10.202
+   *  - control03.openstack.local
+      - OpenStack control node
+      - 10.10.10.203
+   *  - compute01.openstack.local
+      - OpenStack compute node
+      - 10.10.10.211
+   *  - compute02.openstack.local
+      - OpenStack compute node
+      - 10.10.10.212
 
 
 Heat client setup
@@ -43,7 +102,10 @@ The preffered way of installing OpenStack clients is isolated Python
 environment. To creat Python environment and install compatible OpenStack
 clients, you need to install build tools first.
 
-On Ubuntu install:
+Ubuntu installation
+~~~~~~~~~~~~~~~~~~~
+
+Install required packages:
 
 .. code-block:: bash
 
@@ -105,8 +167,8 @@ To test your sourced variables:
 
 Some resources required for heat environment deployment.
 
-OpenStack networks 
-~~~~~~~~~~~~~~~~~~
+Get network ID
+~~~~~~~~~~~~~~
 
 The public network is needed for setting up the ``salt_single`` heat stack. For further stacks, the salt_single network is needed. The network ID can be found in Openstack Dashboard or by running following command:
 
@@ -116,8 +178,8 @@ The public network is needed for setting up the ``salt_single`` heat stack. For 
    $ neutron net-list
 
 
-OpenStack images
-~~~~~~~~~~~~~~~~
+Get image ID
+~~~~~~~~~~~~
 
 Ubuntu 14.04 LTS image is needed for OpenStack-Salt deployments, we recommend to download the latest `tcp cloud image`_. To lookup for actual installed images run:
 
@@ -140,32 +202,19 @@ Now you need to customize env files for stacks, see examples in env directory
 and set required parameters.
 
 
-``env/salt_single.env``:
+``env/tcp_cloud.env``:
     .. code-block:: yaml
 
        parameters:
          instance_image: <image_id>
          public_net_id: <net_id>
-         # Public part of your SSH key and it's name
-         key_name: my-key
-         key_value: ssh-rsa xyz
+         key_value: <ssh_key_public>
 
-``env/openstack_cluster_public.env``:
-    .. code-block:: yaml
-
-       parameters:
-         instance_image: <image_id>
-         private_net_id: <net_id>
-         # Your SSH key, deployed by salt_single stack
-         key_name: my-key
-
-To see all available parameters, see template yaml files in `templates` directory.
-
-Finally you can deploy common stack with Salt master, SSH key and private network.
+To see all available parameters, see template yaml files in `templates` directory. Finally you can deploy  stack with Salt master and OpenStack cloud, your SSH key and private network.
 
 .. code-block:: bash
 
-   $ ./create_stack.sh salt_single
+   $ ./create_stack.sh openstack_salt_ubuntu_single tcp_cloud
 
 If everything goes right, stack should be ready in a few minutes. You can verify by running following commands:
 
@@ -174,19 +223,49 @@ If everything goes right, stack should be ready in a few minutes. You can verify
    $ heat stack-list
    $ nova list
 
-You should be also able to log in as root to public IP provided by ``nova list`` command.
-
-Now you can deploy the actual OpenStack cluster:
-
-.. code-block:: bash
-
-   ./create_stack.sh openstack_cluster
-
-When this cluster is deployed, you canlog in to the instances through the Salt master node.
+You should be also able to log in as root to public IP provided by ``nova list`` command. When this cluster is deployed, you canlog in to the instances through the Salt master node.
 
 .. _Heat template: https://github.com/tcpcloud/heat-templates
 .. _OpenStack-Salt heat templates repository: https://github.com/tcpcloud/heat-templates
 .. _tcp cloud image: http://apt.tcpcloud.eu/images/
+
+
+Openstack-salt testing labs
+---------------------------
+
+You can use publicly available labs offered by technology partners.  
+
+Testing lab at `tcp cloud`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Company tcp cloud has provided 100 cores and 400 GB of RAM divided in 5 separate projects, each with quotas set to 20 cores and 80 GB of RAM. Each project is capable of running both single and cluster deployments.
+
+Endpoint URL:
+    **https://cloudempire-api.tcpcloud.eu:35357/v2.0**
+
+.. list-table::
+   :stub-columns: 1
+
+   *  - **User**
+      - **Project**
+      - **Domain**
+   *  - openstack_salt_user01
+      - openstack_salt_lab01
+      - default
+   *  - openstack_salt_user02
+      - openstack_salt_lab02
+      - default
+   *  - openstack_salt_user03
+      - openstack_salt_lab03
+      - default
+   *  - openstack_salt_user04
+      - openstack_salt_lab04
+      - default
+   *  - openstack_salt_user05
+      - openstack_salt_lab05
+      - default
+
+To get the access credentials and full support, visit ``#openstack-salt`` IRC channel.
 
 --------------
 

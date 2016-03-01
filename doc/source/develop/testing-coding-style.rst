@@ -1,5 +1,5 @@
 
-Testing coding style
+Coding style testing 
 ====================
 
 Formulas are pre-written Salt States. They are as open-ended as Salt States themselves and can be used for tasks such as installing a package, configuring, and starting a service, setting up users or permissions, and many other common tasks. They have certain rules that needs to be adhered.

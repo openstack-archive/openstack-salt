@@ -1,6 +1,6 @@
 `Home <index.html>`_ OpenStack-Salt Development Documentation
 
-Contributor Guidelines
+Contributor guidelines
 ======================
 
 Bugs

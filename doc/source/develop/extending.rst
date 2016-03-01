@@ -1,6 +1,6 @@
 `Home <index.html>`_ OpenStack-Salt Development Documentation
 
-Chapter 3. Extending
+Chapter 2. Extending
 =====================
 
 
