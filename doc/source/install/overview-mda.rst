@@ -12,16 +12,6 @@ Core principles for deploying model-driven architectures.
 - Dynamic resources - Service metadata must be alwyas available for dynamically created resources.
 - Change management - The strength lies not in descibing the static state of service but more the process of everchanging improvements.
 
-Model Maturity Levels
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Based on observable factors we can fit model maturity levels of system into one of the following categories:
-
-1. No Specification
-2. Textual Specification
-3. Text with Models
-4. Models with Text
-5. Precise Models
 
 Sample MDA Scenario
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -249,15 +239,13 @@ Along with the actual definition of node there are service level metadata fragme
             port: 6379
             protocol: tcp
 
-Service Decomposition in reclass 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Service Decomposition 
+~~~~~~~~~~~~~~~~~~~~~
 
 reclass has some features that make it unique:
 
 - Including and deep merging of data structures through usage of classes
 - Parameter interpolation for cross-referencing parameter values
-
-.. Image:: /_static/reclass_structure.svg
 
 The system aggregation level:
 

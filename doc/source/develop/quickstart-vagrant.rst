@@ -46,11 +46,23 @@ Add the generic ubuntu1404 image for virtualbox virtualization.
 Environment setup 
 -----------------
 
-The environment consists of 3 nodes:
+The environment consists of three nodes.
 
-* config: Salt master node, IP: 10.10.10.200
-* control: OpenStack control node, IP: 10.10.10.201
-* compute: OpenStack compute node, IP: 10.10.10.202
+.. list-table::
+   :stub-columns: 1
+
+   *  - **FQDN**
+      - **Role**
+      - **IP**
+   *  - config.openstack.local
+      - Salt master node
+      - 10.10.10.200
+   *  - control.openstack.local
+      - OpenStack control node
+      - 10.10.10.201
+   *  - compute.openstack.local
+      - OpenStack compute node
+      - 10.10.10.202
 
 
 Minion configuration files

@@ -1,7 +1,7 @@
 `Home <index.html>`_ OpenStack-Salt Development Documentation
 
-Chapter 2. Testing
-=====================
+Chapter 3. Testing
+==================
 
 .. toctree::
 
