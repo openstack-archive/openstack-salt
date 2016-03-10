@@ -6,6 +6,7 @@ Chapter 2. Extending
 
 .. toctree::
 
+   extending-ecosystem.rst
    extending-formulas.rst
    extending-contribute.rst
 

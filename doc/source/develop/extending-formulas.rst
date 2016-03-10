@@ -14,13 +14,15 @@ Running Formulas
 The recommended way of running formulas is through Salt orchestration framework.
 Orchestration is accomplished in salt primarily through the `Orchestrate Runner`_. 
 
+.. code-block:: yaml
 
     salt-run state.orchestrate orch.system
 
 Or directly calling formula by Salt state module. 
 
-    salt-call state.sls formula
+.. code-block:: bash
 
+    salt-call state.sls formula
 
 Setting up the Physical Hosts
 -----------------------------
