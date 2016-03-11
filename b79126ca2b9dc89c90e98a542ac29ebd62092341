@@ -1,0 +1,8 @@
+Code-Review+2: Filip Pytloun <filip@pytloun.cz>
+Workflow+1: Filip Pytloun <filip@pytloun.cz>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Fri, 11 Mar 2016 12:59:45 +0000
+Reviewed-on: https://review.openstack.org/291312
+Project: openstack/openstack-salt
+Branch: refs/heads/master
