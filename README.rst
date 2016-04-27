@@ -19,9 +19,9 @@ If you have some questions, or would like some assistance with achieving your go
 `OpenStack Mailing Lists`_ (particularly openstack-operators or openstack-dev) or on IRC in ``#openstack-salt`` on the `freenode network`_.
 
 .. _Home Page: http://governance.openstack.org/reference/projects/openstacksalt.html
-.. _Install Guide: http://docs.openstack.org/developer/openstack-salt/install-guide/index.html
-.. _Quick Start: http://docs.openstack.org/developer/openstack-salt/developer-docs/quickstart.html
-.. _Developer Documentation: http://docs.openstack.org/developer/openstack-salt/developer-docs/index.html
+.. _Install Guide: http://openstack-salt.tcpcloud.eu/install/index.html
+.. _Quick Start: http://openstack-salt.tcpcloud.eu/develop/index.html#quick-start
+.. _Developer Documentation: http://openstack-salt.tcpcloud.eu/develop/index.html
 .. _Source: http://git.openstack.org/cgit/openstack/openstack-salt
 .. _OpenStack Mailing Lists: http://lists.openstack.org/
 .. _freenode network: https://freenode.net/
