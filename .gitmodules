@@ -1,27 +1,27 @@
 [submodule "formulas/ceilometer"]
 	path = formulas/ceilometer
-	url = https://github.com/openstack/salt-formula-ceilometer.git
+	url = https://git.openstack.org/openstack/salt-formula-ceilometer
 [submodule "formulas/cinder"]
 	path = formulas/cinder
-	url = https://github.com/openstack/salt-formula-cinder.git
+	url = https://git.openstack.org/openstack/salt-formula-cinder
 [submodule "formulas/glance"]
 	path = formulas/glance
-	url = https://github.com/openstack/salt-formula-glance.git
+	url = https://git.openstack.org/openstack/salt-formula-glance
 [submodule "formulas/heat"]
 	path = formulas/heat
-	url = https://github.com/openstack/salt-formula-heat.git
+	url = https://git.openstack.org/openstack/salt-formula-heat
 [submodule "formulas/horizon"]
 	path = formulas/horizon
-	url = https://github.com/openstack/salt-formula-horizon.git
+	url = https://git.openstack.org/openstack/salt-formula-horizon
 [submodule "formulas/keystone"]
 	path = formulas/keystone
-	url = https://github.com/openstack/salt-formula-keystone.git
+	url = https://git.openstack.org/openstack/salt-formula-keystone
 [submodule "formulas/neutron"]
 	path = formulas/neutron
-	url = https://github.com/openstack/salt-formula-neutron.git
+	url = https://git.openstack.org/openstack/salt-formula-neutron
 [submodule "formulas/nova"]
 	path = formulas/nova
-	url = https://github.com/openstack/salt-formula-nova.git
+	url = https://git.openstack.org/openstack/salt-formula-nova
 [submodule "formulas/opencontrail"]
 	path = formulas/opencontrail
-	url = https://github.com/openstack/salt-formula-opencontrail.git
+	url = https://git.openstack.org/openstack/salt-formula-opencontrail
