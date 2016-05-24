@@ -1,26 +1,33 @@
-#!/bin/bash
+#!/bin/bash -x
 
 CONFIG_HOST=${CONFIG_HOST:-config.openstack.local}
-
+FORMULA_PATH=${FORMULA_PATH:-/usr/share/salt-formulas/env/_formulas}
+FORMULA_BRANCH=${FORMULA_BRANCH:-master}
 RECLASS_ADDRESS=${RECLASS_ADDRESS:-https://github.com/tcpcloud/workshop-salt-model.git}
+RECLASS_BRANCH=${RECLASS_BRANCH:-master}
 
-echo "Preparing base OS"
+declare -a FORMULA_SERVICES=("linux" "reclass" "salt" "openssh" "ntp" "git" "nginx" "collectd" "sensu" "heka" "sphinx")
+
+
+printf "\nPreparing base OS repository ...\n"
 which wget > /dev/null || (apt-get update; apt-get install -y wget)
 
-echo "deb [arch=amd64] http://apt.tcpcloud.eu/nightly/ trusty main security extra tcp tcp-salt" > /etc/apt/sources.list
+printf "deb [arch=amd64] http://apt.tcpcloud.eu/nightly/ trusty main security extra tcp tcp-salt" > /etc/apt/sources.list
 wget -O - http://apt.tcpcloud.eu/public.gpg | apt-key add -
 
 apt-get clean
 apt-get update
 
-echo "Configuring salt master ..."
-apt-get install salt-master -y
+printf "\nInstalling salt master ...\n"
+apt-get install git salt-master python-reclass -y
 
-echo "Configuring salt minion ..."
+printf "\nConfiguring salt minion ...\n"
 [ ! -d /etc/salt/minion.d ] && mkdir -p /etc/salt/minion.d
-echo "id: $node_name" >> /etc/salt/minion.d/minion.conf
-echo "master: localhost" >> /etc/salt/minion.d/minion.conf
-cat << 'EOF' >> /etc/salt/master.d/master.conf
+printf "id: ${CONFIG_HOST}\n" > /etc/salt/minion.d/minion.conf
+printf "master: localhost" >> /etc/salt/minion.d/minion.conf
+
+printf "\nConfiguring salt master ...\n"
+cat << 'EOF' > /etc/salt/master.d/master.conf
 file_roots:
   base:
   - /usr/share/salt-formulas/env
@@ -36,73 +43,53 @@ master_tops:
   reclass: *reclass
 EOF
 
-env
-
-echo "Getting salt formulas ..."
-ssh-keyscan -H -t ecdsa git.tcpcloud.eu >> /root/.ssh/known_hosts
-git clone git@git.tcpcloud.eu:saltstack-formulas/linux-formula.git /usr/share/salt-formulas/env/_formulas/linux -b $formulas_branch
-git clone git@git.tcpcloud.eu:saltstack-formulas/reclass-formula.git /usr/share/salt-formulas/env/_formulas/reclass -b $formulas_branch
-git clone git@git.tcpcloud.eu:saltstack-formulas/salt-formula.git /usr/share/salt-formulas/env/_formulas/salt -b $formulas_branch
-git clone git@git.tcpcloud.eu:saltstack-formulas/openssh-formula.git /usr/share/salt-formulas/env/_formulas/openssh -b $formulas_branch
-git clone git@git.tcpcloud.eu:saltstack-formulas/git-formula.git /usr/share/salt-formulas/env/_formulas/git -b $formulas_branch
-git clone git@git.tcpcloud.eu:saltstack-formulas/ntp-formula.git /usr/share/salt-formulas/env/_formulas/ntp -b $formulas_branch
-git clone git@git.tcpcloud.eu:saltstack-formulas/nginx-formula.git /usr/share/salt-formulas/env/_formulas/nginx -b $formulas_branch
-git clone git@git.tcpcloud.eu:saltstack-formulas/collectd-formula.git /usr/share/salt-formulas/env/_formulas/collectd -b $formulas_branch
-git clone git@git.tcpcloud.eu:saltstack-formulas/sensu-formula.git /usr/share/salt-formulas/env/_formulas/sensu -b $formulas_branch
-git clone git@git.tcpcloud.eu:saltstack-formulas/sphinx-formula.git /usr/share/salt-formulas/env/_formulas/sphinx -b $formulas_branch
-git clone git@git.tcpcloud.eu:saltstack-formulas/heka-formula.git /usr/share/salt-formulas/env/_formulas/heka -b $formulas_branch
-git clone $reclass_address /srv/salt/reclass -b $reclass_branch
-
-echo "Configuring formula defintions ..."
-ln -s /usr/share/salt-formulas/env/_formulas/linux/linux /usr/share/salt-formulas/env/linux
-ln -s /usr/share/salt-formulas/env/_formulas/reclass/reclass /usr/share/salt-formulas/env/reclass
-ln -s /usr/share/salt-formulas/env/_formulas/salt/salt /usr/share/salt-formulas/env/salt
-ln -s /usr/share/salt-formulas/env/_formulas/openssh/openssh /usr/share/salt-formulas/env/openssh
-ln -s /usr/share/salt-formulas/env/_formulas/git/git /usr/share/salt-formulas/env/git
-ln -s /usr/share/salt-formulas/env/_formulas/ntp/ntp /usr/share/salt-formulas/env/ntp
-ln -s /usr/share/salt-formulas/env/_formulas/nginx/nginx /usr/share/salt-formulas/env/nginx
-ln -s /usr/share/salt-formulas/env/_formulas/collectd/collectd /usr/share/salt-formulas/env/collectd
-ln -s /usr/share/salt-formulas/env/_formulas/sensu/sensu /usr/share/salt-formulas/env/sensu
-ln -s /usr/share/salt-formulas/env/_formulas/sphinx/sphinx /usr/share/salt-formulas/env/sphinx
-ln -s /usr/share/salt-formulas/env/_formulas/heka/heka /usr/share/salt-formulas/env/heka
-
-echo "Configuring reclass metadata ..."
-mkdir -p /srv/salt/reclass/classes/service
-ln -s /usr/share/salt-formulas/env/_formulas/linux/metadata/service /srv/salt/reclass/classes/service/linux
-ln -s /usr/share/salt-formulas/env/_formulas/reclass/metadata/service /srv/salt/reclass/classes/service/reclass
-ln -s /usr/share/salt-formulas/env/_formulas/salt/metadata/service /srv/salt/reclass/classes/service/salt
-ln -s /usr/share/salt-formulas/env/_formulas/openssh/metadata/service /srv/salt/reclass/classes/service/openssh
-ln -s /usr/share/salt-formulas/env/_formulas/git/metadata/service /srv/salt/reclass/classes/service/git
-ln -s /usr/share/salt-formulas/env/_formulas/ntp/metadata/service /srv/salt/reclass/classes/service/ntp
-ln -s /usr/share/salt-formulas/env/_formulas/nginx/metadata/service /srv/salt/reclass/classes/service/nginx
-ln -s /usr/share/salt-formulas/env/_formulas/collectd/metadata/service /srv/salt/reclass/classes/service/collectd
-ln -s /usr/share/salt-formulas/env/_formulas/sensu/metadata/service /srv/salt/reclass/classes/service/sensu
-ln -s /usr/share/salt-formulas/env/_formulas/sphinx/metadata/service /srv/salt/reclass/classes/service/sphinx
-ln -s /usr/share/salt-formulas/env/_formulas/heka/metadata/service /srv/salt/reclass/classes/service/heka
-
-[ ! -d /srv/salt/env ] && mkdir -p /srv/salt/env
-ln -s /usr/share/salt-formulas/env /srv/salt/env/dev
-
-mkdir /etc/reclass
-cat << 'EOF' >> /etc/reclass/reclass-config.yml
+printf "\nConfiguring reclass ...\n"
+mkdir -p /etc/reclass
+cat << 'EOF' > /etc/reclass/reclass-config.yml
 storage_type: yaml_fs
 pretty_print: True
 output: yaml
 inventory_base_uri: /srv/salt/reclass
 EOF
 
-echo "Restarting services ..."
+git clone ${RECLASS_ADDRESS} /srv/salt/reclass -b ${RECLASS_BRANCH}
+mkdir -p /srv/salt/reclass/classes/service
+mkdir -p /usr/share/salt-formulas/reclass/service
+
+[ ! -d /srv/salt/env ] && mkdir -p /srv/salt/env
+[ ! -e "/srv/salt/env/dev" ] && ln -s /usr/share/salt-formulas/env /srv/salt/env/dev
+[ ! -e "/srv/salt/env/prd" ] && ln -s /usr/share/salt-formulas/env /srv/salt/env/prd
+
+for FORMULA_SERVICE in "${FORMULA_SERVICES[@]}"
+do
+    printf "\nConfiguring salt formula ${FORMULA_SERVICE} ...\n"
+    [ ! -d "${FORMULA_PATH}/${FORMULA_SERVICE}" ] && \
+        git clone "https://github.com/tcpcloud/salt-formula-${FORMULA_SERVICE}.git" "${FORMULA_PATH}/${FORMULA_SERVICE}" -b ${FORMULA_BRANCH}
+    [ ! -e "/usr/share/salt-formulas/env/${FORMULA_SERVICE}" ] && \
+        ln -s "${FORMULA_PATH}/${FORMULA_SERVICE}/${FORMULA_SERVICE}" "/usr/share/salt-formulas/env/${FORMULA_SERVICE}"
+    [ ! -e "/usr/share/salt-formulas/reclass/service/${FORMULA_SERVICE}" ] && \
+        ln -s "${FORMULA_PATH}/${FORMULA_SERVICE}/metadata/service" "/usr/share/salt-formulas/reclass/service/${FORMULA_SERVICE}"
+    [ ! -e "/srv/salt/reclass/classes/service/${FORMULA_SERVICE}" ] && \
+        ln -s "/usr/share/salt-formulas/reclass/service/${FORMULA_SERVICE}" "/srv/salt/reclass/classes/service/${FORMULA_SERVICE}"
+done
+
+printf "\nRestarting services ...\n"
 service salt-master restart
-sleep 5
 service salt-minion restart
-sleep 5
-salt-key -a $node_name -y
-echo "Showing system raw metadata ..."
-reclass --nodeinfo $node_name
-echo "Showing system info and parsed metadata ..."
-salt-call grains.items --no-color
 salt-call pillar.data --no-color
-echo "Running complete state ..."
-salt-call state.sls linux,openssh,salt.minion --no-color
-salt-call state.sls salt.master --no-color
+salt-key -a ${CONFIG_HOST} -y
+
+printf "\nReclass metadata ...\n"
+reclass --nodeinfo ${CONFIG_HOST}
+
+printf "\nSalt grains metadata ...\n"
+salt-call grains.items --no-color
+
+printf "\nSalt pillar metadata ...\n"
+salt-call pillar.data --no-color
+
+printf "\nRunning base states ...\n"
+salt-call state.sls linux,openssh,salt.minion,salt.master.service --no-color
+
+printf "\nRunning complete state ...\n"
 salt-call state.highstate --no-color
