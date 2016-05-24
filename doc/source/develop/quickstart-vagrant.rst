@@ -24,12 +24,6 @@ Installing Vagrant is extremely easy for many operating systems. Go to the `Vagr
 
 The installer will automatically add vagrant to your system path so that it is available in shell. Try logging out and logging back in to your system (this is particularly necessary sometimes for Windows) to get the updated system path up and running.
 
-First we will install vagrant-salt plugin for minion configuration.
-
-.. code-block:: bash
-
-   $ vagrant plugin install vagrant-salt
-
 Add the generic ubuntu1404 image for virtualbox virtualization.
 
 .. code-block:: bash
