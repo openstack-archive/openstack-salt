@@ -1,73 +1,34 @@
 #!/bin/bash
 
-CONFIG_HOST=${CONFIG_HOST:-config.openstack.local}
+FORMULA_PATH=${FORMULA_PATH:-/usr/share/salt-formulas}
+FORMULA_ADDRESS=${FORMULA_ADDRESS:-deb [arch=amd64] http://apt.tcpcloud.eu/nightly/ trusty tcp-salt}
+FORMULA_GPG=${FORMULA_GPG:-http://apt.tcpcloud.eu/public.gpg}
 
-RECLASS_ADDRESS=${RECLASS_ADDRESS:-https://github.com/tcpcloud/workshop-salt-model.git}
+CONFIG_HOSTNAME=${CONFIG_HOSTNAME:-config}
+CONFIG_DOMAIN=${CONFIG_DOMAIN:-openstack.local}
+CONFIG_HOST=${CONFIG_HOSTNAME}.${CONFIG_DOMAIN}
+CONFIG_ADDRESS=${CONFIG_ADDRESS:-10.10.10.200}
 
-echo "Preparing base OS"
+echo "Configuring necessary formulas ..."
 which wget > /dev/null || (apt-get update; apt-get install -y wget)
 
-echo "deb [arch=amd64] http://apt.tcpcloud.eu/nightly/ trusty main security extra tcp tcp-salt" > /etc/apt/sources.list
-wget -O - http://apt.tcpcloud.eu/public.gpg | apt-key add -
+echo "${FORMULA_ADDRESS}" > /etc/apt/sources.list.d/salt-formulas.list
+wget -O - "${FORMULA_GPG}" | apt-key add -
 
 apt-get clean
 apt-get update
 
-echo "Configuring salt master ..."
-apt-get install -y salt-formula-linux salt-formula-reclass salt-formula-salt
-apt-get install -y salt-formula-openssh salt-formula-ntp salt-formula-git
-apt-get install -y salt-formula-collectd salt-formula-sensu salt-formula-heka
+[ ! -d /srv/salt/reclass/classes/service ] && mkdir -p /srv/salt/reclass/classes/service
 
-cat << 'EOF' > /etc/salt/master.d/master.conf
-file_roots:
-  base:
-  - /usr/share/salt-formulas/env
-pillar_opts: False
-open_mode: True
-reclass: &reclass
-  storage_type: yaml_fs
-  inventory_base_uri: /srv/salt/reclass
-ext_pillar:
-  - reclass: *reclass
-master_tops:
-  reclass: *reclass
-EOF
+declare -a formula_services=("linux" "reclass" "salt" "openssh" "ntp" "git" "nginx" "collectd" "sensu" "heka" "sphinx")
 
-echo "Configuring reclass ..."
-git clone $RECLASS_ADDRESS /srv/salt/reclass -b master
-mkdir -p /srv/salt/reclass/classes/service
-
-for i in /usr/share/salt-formulas/reclass/service/*; do
-  ln -s $i /srv/salt/reclass/classes/service/
+for formula_service in "${formula_services[@]}"; do
+    echo -e "\nConfiguring salt formula ${formula_service} ...\n"
+    [ ! -d "${FORMULA_PATH}/env/${formula_service}" ] && \
+        apt-get install -y salt-formula-${formula_service}
+    [ ! -L "/srv/salt/reclass/classes/service/${formula_service}" ] && \
+        ln -s ${FORMULA_PATH}/reclass/service/${formula_service} /srv/salt/reclass/classes/service/${formula_service}
 done
 
-[ ! -d /etc/reclass ] && mkdir /etc/reclass
-cat << 'EOF' > /etc/reclass/reclass-config.yml
-storage_type: yaml_fs
-pretty_print: True
-output: yaml
-inventory_base_uri: /srv/salt/reclass
-EOF
-
-echo "Configuring salt minion ..."
-apt-get install -y salt-minion
-[ ! -d /etc/salt/minion.d ] && mkdir -p /etc/salt/minion.d
-cat << EOF > /etc/salt/minion.d/minion.conf
-id: $CONFIG_HOST
-master: localhost
-EOF
-
-echo "Restarting services ..."
-service salt-master restart
-rm -f /etc/salt/pki/minion/minion_master.pub
-service salt-minion restart
-
-echo "Showing system info and metadata ..."
-salt-call grains.items
-salt-call pillar.data
-reclass -n $CONFIG_HOST
-
-echo "Running complete state ..."
-salt-call state.sls linux,openssh,salt.minion
-salt-call state.sls salt.master
-salt-call state.highstate
+[ ! -d /srv/salt/env ] && mkdir -p /srv/salt/env
+[ ! -L /srv/salt/env/prd ] && ln -s ${FORMULA_PATH}/env /srv/salt/env/prd
