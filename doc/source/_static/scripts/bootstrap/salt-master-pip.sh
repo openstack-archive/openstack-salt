@@ -5,7 +5,7 @@ OS_NETWORKING=${OS_NETWORKING:-opencontrail}
 OS_DEPLOYMENT=${OS_DEPLOYMENT:-single}
 OS_SYSTEM="${OS_DISTRIBUTION}_${OS_NETWORKING}_${OS_DEPLOYMENT}"
 
-SALT_SOURCE=${SALT_SOURCE:-pkg}
+SALT_SOURCE=${SALT_SOURCE:-pip}
 SALT_VERSION=${SALT_VERSION:-latest}
 
 FORMULA_SOURCE=${FORMULA_SOURCE:-git}
@@ -35,13 +35,20 @@ apt-get update
 
 echo -e "\nInstalling salt master ...\n"
 
-apt-get install reclass git -y
+if [ -x "`which invoke-rc.d 2>/dev/null`" -a -x "/etc/init.d/salt-minion" ] ; then
+  apt-get purge -y salt-minion salt-common && apt-get autoremove -y
+fi
+
+apt-get install -y python-pip python-dev zlib1g-dev reclass git
 
 if [ "$SALT_VERSION" == "latest" ]; then
-  apt-get install -y salt-common salt-master salt-minion
+  pip install salt
 else
-  apt-get install -y --force-yes salt-common=$SALT_VERSION salt-master=$SALT_VERSION salt-minion=$SALT_VERSION
+  pip install salt==$SALT_VERSION
 fi
+
+wget -O /etc/init.d/salt-master https://anonscm.debian.org/cgit/pkg-salt/salt.git/plain/debian/salt-master.init && chmod 755 /etc/init.d/salt-master
+ln -s /usr/local/bin/salt-master /usr/bin/salt-master
 
 [ ! -d /etc/salt/master.d ] && mkdir -p /etc/salt/master.d
 
@@ -59,6 +66,9 @@ ext_pillar:
 master_tops:
   reclass: *reclass
 EOF
+
+wget -O /etc/init.d/salt-minion https://anonscm.debian.org/cgit/pkg-salt/salt.git/plain/debian/salt-minion.init && chmod 755 /etc/init.d/salt-minion
+ln -s /usr/local/bin/salt-minion /usr/bin/salt-minion
 
 [ ! -d /etc/salt/minion.d ] && mkdir -p /etc/salt/minion.d
 
