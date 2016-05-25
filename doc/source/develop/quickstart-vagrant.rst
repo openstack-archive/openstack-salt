@@ -3,15 +3,18 @@
 OpenStack-Salt Vagrant deployment
 =================================
 
-All-in-one (AIO) deployments are a great way to setup an OpenStack-Salt cloud for:
+All-in-one (AIO) deployments are a great way to setup an OpenStack-Salt cloud
+for:
 
 * a service development environment
 * an overview of how all of the OpenStack services and roles play together
 * a simple lab deployment for testing
 
-Although AIO builds aren't suitable for large production deployments, they're great for small proof-of-concept deployments.
+Although AIO builds aren't suitable for large production deployments, they're
+great for small proof-of-concept deployments.
 
-It's strongly recommended to have hardware that meets the following requirements before starting an AIO deployment:
+It's strongly recommended to have hardware that meets the following
+requirements before starting an AIO deployment:
 
 * CPU with `hardware-assisted virtualization`_ support
 * At least 80GB disk space
@@ -20,9 +23,15 @@ It's strongly recommended to have hardware that meets the following requirements
 Vagrant setup
 -------------
 
-Installing Vagrant is extremely easy for many operating systems. Go to the `Vagrant downloads page`_ and get the appropriate installer or package for your platform. Install the package using standard procedures for your operating system.
+Installing Vagrant is extremely easy for many operating systems. Go to the
+`Vagrant downloads page`_ and get the appropriate installer or package for
+your platform. Install the package using standard procedures for your
+operating system.
 
-The installer will automatically add vagrant to your system path so that it is available in shell. Try logging out and logging back in to your system (this is particularly necessary sometimes for Windows) to get the updated system path up and running.
+The installer will automatically add vagrant to your system path so that it is
+available in shell. Try logging out and logging back in to your system (this
+is particularly necessary sometimes for Windows) to get the updated system
+path up and running.
 
 First we will install vagrant-salt plugin for minion configuration.
 
@@ -65,22 +74,25 @@ The environment consists of three nodes.
       - 10.10.10.202
 
 
+
 Minion configuration files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Prepare basic configuration files for each node deployed.
+Download openstack-salt
 
-Set ``/srv/vagrant-openstack/minions/config.conf`` to following:
+Look at configuration files for each node deployed.
+
+``scripts/minions/config.conf`` configuration:
 
 .. literalinclude:: /_static/scripts/minions/config.conf
    :language: yaml
 
-Set ``/srv/vagrant-openstack/minions/control.conf`` to following:
+``scripts/minions/control.conf`` configuration:
 
 .. literalinclude:: /_static/scripts/minions/control.conf
    :language: yaml
 
-Set ``/srv/vagrant-openstack/minions/compute.conf`` to following content:
+``scripts/minions/compute.conf`` configuration:
 
 .. literalinclude:: /_static/scripts/minions/compute.conf
    :language: yaml
@@ -89,20 +101,32 @@ Set ``/srv/vagrant-openstack/minions/compute.conf`` to following content:
 Vagrant configuration file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The main vagrant configuration for OpenStack-Salt deployment is located at ``/srv/vagrant-openstack/Vagrantfile``.
+The main vagrant configuration for OpenStack-Salt deployment is located at
+``scripts/Vagrantfile``.
 
 .. literalinclude:: /_static/scripts/Vagrantfile
    :language: ruby
 
 
-Salt master bootstrap file
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Salt master bootstrap from package
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The salt-master bootstrap is located at ``/srv/vagrant-openstack/bootstrap-salt-master.sh`` and it needs to be placed at the vagrant-openstack folder to be accessible from the virtual machine.
+The salt-master bootstrap is located at ``scripts/bootstrap/salt-
+master-pkg.sh`` and is accessible from the virtual machine at ``/vagrant
+/bootstrap/salt-master-pkg.sh``.
 
 .. literalinclude:: /_static/scripts/bootstrap/salt-master-pkg.sh
    :language: bash
 
+Salt master pip based bootstrap
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The salt-master bootstrap is located at ``scripts/bootstrap/salt- master-
+pip.sh`` and is accessible from the virtual machine at ``/vagrant/bootstrap
+/salt-master-pip.sh``.
+
+.. literalinclude:: /_static/scripts/bootstrap/salt-master-pip.sh
+   :language: bash
 
 Launching the Vagrant nodes
 ---------------------------
@@ -120,45 +144,60 @@ Check the status of the deployment environment.
     openstack_control         not created (virtualbox)
     openstack_compute         not created (virtualbox)
 
-Setup OpenStack-Salt config node, launch it and connect to it using following commands, it cannot be provisioned by vagrant salt, as the salt master is not configured yet.
+Setup OpenStack-Salt config node, launch it and connect to it using following
+commands, it cannot be provisioned by vagrant salt, as the salt master is not
+configured yet.
 
 .. code-block:: bash
 
     $ vagrant up openstack_config
     $ vagrant ssh openstack_config
 
-Bootstrap the salt master service on the config node, it can be configured with following parameters:
+
+Bootstrap Salt master
+~~~~~~~~~~~~~~~~~~~~~
+
+Bootstrap the salt master service on the config node, it can be configured
+with following parameters:
 
 .. code-block:: bash
 
-    $ cd /vagrant
-
-    $ export RECLASS_ADDRESS=https://github.com/tcpcloud/workshop-salt-model.git
+    $ export RECLASS_ADDRESS=https://github.com/tcpcloud/openstack-salt-model.git
     $ export CONFIG_HOST=config.openstack.local
 
-    # to deploy salt-master from packages, run:
+To deploy salt-master from packages, run on config node:
 
-    $ ./bootstrap-salt-master-pkg.sh
+.. code-block:: bash
 
-    # to deploy salt-master from git, run:
+    $ /vagrant/bootstrap/salt-master-pkg.sh
 
-    $ ./bootstrap-salt-master-git.sh
+To deploy salt-master from pip, run on config node:
 
-Now setup the OpenStack-Salt control node. Launch it and provision using following command:
+.. code-block:: bash
+
+    $ /vagrant/bootstrap/salt-master-pip.sh
+
+Now setup the OpenStack-Salt control node. Launch it using following command:
 
 .. code-block:: bash
 
     $ vagrant up openstack_control
-    $ vagrant provision openstack_control
 
-Now setup the OpenStack-Salt compute node. Launch it and provision using following command:
+Now setup the OpenStack-Salt compute node. Launch it using following command:
 
 .. code-block:: bash
 
     $ vagrant up openstack_compute
-    $ vagrant provision openstack_compute
 
-The installation is now over, you should be able to access the user interface of cloud deployment at
+To orchestrate the services accross all nodes, run following command on config
+node:
+
+.. code-block:: bash
+
+    $ salt-run state.orchestrate orchestrate
+
+The installation is now over, you should be able to access the user interface
+of cloud deployment at your control node.
 
 .. _hardware-assisted virtualization: https://en.wikipedia.org/wiki/Hardware-assisted_virtualization
 .. _Vagrant downloads page: https://www.vagrantup.com/downloads.html
