@@ -14,7 +14,6 @@ apt-get clean
 apt-get update
 
 echo "Configuring salt master ..."
-apt-get install -y salt-master
 apt-get install -y salt-formula-linux salt-formula-reclass salt-formula-salt
 apt-get install -y salt-formula-openssh salt-formula-ntp salt-formula-git
 apt-get install -y salt-formula-collectd salt-formula-sensu salt-formula-heka

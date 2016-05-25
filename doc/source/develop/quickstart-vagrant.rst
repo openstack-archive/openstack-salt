@@ -72,17 +72,17 @@ Prepare basic configuration files for each node deployed.
 
 Set ``/srv/vagrant-openstack/minions/config.conf`` to following:
 
-.. literalinclude:: ../../../scripts/minions/config.conf
+.. literalinclude:: /_static/scripts/minions/config.conf
    :language: yaml
 
 Set ``/srv/vagrant-openstack/minions/control.conf`` to following:
 
-.. literalinclude:: ../../../scripts/minions/control.conf
+.. literalinclude:: /_static/scripts/minions/control.conf
    :language: yaml
 
 Set ``/srv/vagrant-openstack/minions/compute.conf`` to following content:
 
-.. literalinclude:: ../../../scripts/minions/compute.conf
+.. literalinclude:: /_static/scripts/minions/compute.conf
    :language: yaml
 
 
@@ -91,7 +91,7 @@ Vagrant configuration file
 
 The main vagrant configuration for OpenStack-Salt deployment is located at ``/srv/vagrant-openstack/Vagrantfile``.
 
-.. literalinclude:: ../../../scripts/Vagrantfile
+.. literalinclude:: /_static/scripts/Vagrantfile
    :language: ruby
 
 
@@ -100,7 +100,7 @@ Salt master bootstrap file
 
 The salt-master bootstrap is located at ``/srv/vagrant-openstack/bootstrap-salt-master.sh`` and it needs to be placed at the vagrant-openstack folder to be accessible from the virtual machine.
 
-.. literalinclude:: ../../../scripts/bootstrap-salt-master-pkg.sh
+.. literalinclude:: /_static/scripts/bootstrap/salt-master-pkg.sh
    :language: bash
 
 

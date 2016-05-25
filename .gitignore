@@ -10,7 +10,7 @@
 build/
 dist/
 doc/build/
-scripts/.vagrant/
+doc/source/_static/scripts/.vagrant/
 
 # Packages #
 ############
