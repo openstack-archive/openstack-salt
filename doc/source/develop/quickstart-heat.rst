@@ -23,29 +23,12 @@ The single-node deployment has following requirements:
 Available Heat templates
 ------------------------
 
-The `OpenStack-Salt heat templates repository`_ contains several repositories to help installing cloud deployments in OpenStack. We have prepared several basic deployment setups, summarised in the table below:
-
-.. list-table::
-   :stub-columns: 1
-
-   *  - **HOT template**
-      - **Description**
-      - **Status**
-   *  - openstack_salt_ubuntu_cluster
-      - HA Cluster OpenStack deployment on Ubuntu
-      - Stable
-   *  - openstack_salt_ubuntu_single
-      - Single-node OpenStack deployment on Ubuntu
-      - Testing
-   *  - openstack_salt_redhat_single
-      - Single-node OpenStack deployment on RedHat
-      - Experimental
-
+We have prepared two generic OpenStack Salt lab templates, OpenStack in single and OpenStack in cluster configuration. Both are deployed by custom parametrized bootstrap script, which sets up Salt master with OpenStack Salt formula ecosystem and example metadata.
 
 Openstack-salt single setup
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``openstack_salt_ubuntu_single`` environment consists of three nodes.
+The ``openstack_single`` environment consists of three nodes.
 
 .. list-table::
    :stub-columns: 1
@@ -67,7 +50,7 @@ The ``openstack_salt_ubuntu_single`` environment consists of three nodes.
 Openstack-salt cluster setup
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``openstack_salt_ubuntu_cluster`` environment consists of six nodes.
+The ``openstack_cluster`` environment consists of six nodes.
 
 .. list-table::
    :stub-columns: 1
@@ -170,7 +153,7 @@ Some resources required for heat environment deployment.
 Get network ID
 ~~~~~~~~~~~~~~
 
-The public network is needed for setting up the ``salt_single`` heat stack. For further stacks, the salt_single network is needed. The network ID can be found in Openstack Dashboard or by running following command:
+The public network is needed for setting up both testing heat stacks. The network ID can be found in Openstack Dashboard or by running following command:
 
 
 .. code-block:: bash
@@ -181,7 +164,7 @@ The public network is needed for setting up the ``salt_single`` heat stack. For 
 Get image ID
 ~~~~~~~~~~~~
 
-Ubuntu 14.04 LTS image is needed for OpenStack-Salt deployments, we recommend to download the latest `tcp cloud image`_. To lookup for actual installed images run:
+Image ID is required to run OpenStack Salt lab templates, Ubuntu 14.04 LTS is required as config_image and image for one of the supported platforms is required as instance_image, used for OpenStack instances. To lookup for actual installed images run:
 
 .. code-block:: bash
 
@@ -191,30 +174,257 @@ Ubuntu 14.04 LTS image is needed for OpenStack-Salt deployments, we recommend to
 Launching the Heat stack
 ------------------------
 
-Download heat templates from `OpenStack-Salt heat templates repository`_.
+Download heat templates from this repository.
 
 .. code-block:: bash
 
-   $ git clone https://github.com/tcpcloud/heat-templates.git
+   $ git clone git@github.com:openstack/openstack-salt.git
+   $ cd doc/source/_static/scripts/
 
+Now you need to customize env files for stacks, see examples in envs directory ``doc/source/_static/scripts/envs`` and set required parameters.
 
-Now you need to customize env files for stacks, see examples in env directory
-and set required parameters.
+Full examples of env files for the two respective stacks:
 
+OpenStack templates generic parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``env/tcp_cloud.env``:
-    .. code-block:: yaml
+**public_net_id**
+  name of external network
 
-       parameters:
-         instance_image: <image_id>
-         public_net_id: <net_id>
-         key_value: <ssh_key_public>
+**instance_image**
+  image for OpenStack instances, must correspond with os_distribution
 
-To see all available parameters, see template yaml files in `templates` directory. Finally you can deploy  stack with Salt master and OpenStack cloud, your SSH key and private network.
+**config_image**
+  image for Salt master node, currently only Ubuntu 14.04 supported
+
+**key_value**
+  paste your SSH key here
+
+**salt_source**
+  salt-master installation source
+
+  options: 
+    - pkg
+    - pip
+
+  default:
+    - pkg
+
+**salt_version** 
+  salt-master version
+
+  options: 
+    - latest
+    - 2015.8.11
+    - 2015.8.10
+    - 2015.8.9
+    - ...
+
+  default: 
+    - latest
+
+**formula_source**
+  salt formulas source
+
+  options: 
+    - git
+    - pkg
+
+  default:
+    - git
+
+**formula_path**
+  path to formulas
+
+  default: 
+    - /usr/share/salt-formulas
+
+**formula_branch**
+  formulas git branch
+
+  default:
+    - master
+
+**reclass_address**
+  reclass git repository
+
+  default:
+    - https://github.com/tcpcloud/openstack-salt-model.git
+
+**reclass_branch** 
+  reclass git branch
+
+  default: 
+    - master
+
+**os_version**
+  OpenStack release version
+
+  options: 
+    - kilo
+
+  default:
+    - kilo
+
+**os_distribution**
+  OpenStack nodes distribution
+
+  options: 
+    - ubuntu
+    - redhat
+
+  default: 
+    - ubuntu
+
+**os_networking**
+  OpenStack networking engine
+
+  options: 
+    - opencontrail
+    - neutron
+
+  default: 
+    - opencontrail
+
+**os_deployment** 
+  OpenStack architecture
+
+  options: 
+    - single
+    - cluster
+
+  default: 
+    - single
+
+**config_hostname**
+  salt-master hostname
+
+  default: 
+    - config
+
+**config_address**
+  salt-master internal IP address
+
+  default: 
+    - 10.10.10.200
+
+OpenStack single specific parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**config_domain**
+  salt-master domain
+
+  default:
+    - openstack.local
+
+**ctl01_name**
+  OS controller hostname
+
+  default: 
+    - control
+
+**cmp01_name**
+  OS compute hostname
+
+  default: 
+    - compute
+
+**prx01_name**
+  OS proxy hostname
+
+  default: 
+    - proxy
+
+OpenStack cluster specific parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**config_domain**
+  salt-master domain
+
+  default:
+    - openstack-ha.local
+
+**ctl01_name**
+  OS controller 1 hostname
+
+  default: 
+    - control01
+
+**ctl02_name**
+  OS controller 2 hostname
+
+  default: 
+    - control02
+
+**ctl03_name**
+  OS controller 3 hostname
+
+  default: 
+    - control03
+
+**cmp01_name**
+  OS compute 1 hostname
+
+  default: 
+    - compute01
+
+**cmp02_name**
+  OS compute 2 hostname
+
+  default:
+    - compute02
+  
+**prx01_name**
+  OS proxy hostname
+    
+  default: 
+    - proxy
+
+openstack_single.hot environment examples
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**OpenStack Kilo on Ubuntu with OpenContrail networking**
+
+``/_static/scripts/envs/openstack_single_kilo_ubuntu_opencontrail.env.example``
+
+.. literalinclude:: /_static/scripts/envs/openstack_single_kilo_ubuntu_opencontrail.env.example
+   :language: yaml
+
+**OpenStack Kilo on Ubuntu with Neutron DVR networking**
+
+``/_static/scripts/envs/openstack_single_kilo_ubuntu_neutron.env.example``
+
+.. literalinclude:: /_static/scripts/envs/openstack_single_kilo_ubuntu_neutron.env.example
+   :language: yaml
+
+**OpenStack Kilo on CentOS/RHEL with OpenContrail networking**
+
+``/_static/scripts/envs/openstack_single_kilo_redhat_opencontrail.env.example``
+
+.. literalinclude:: /_static/scripts/envs/openstack_single_kilo_redhat_opencontrail.env.example
+   :language: yaml
+
+openstack_cluster.hot environment examples
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**OpenStack Kilo on Ubuntu with OpenContrail networking**
+
+``/_static/scripts/envs/openstack_cluster_kilo_ubuntu_opencontrail.env.example``
+
+.. literalinclude:: /_static/scripts/envs/openstack_cluster_kilo_ubuntu_opencontrail.env.example
+   :language: yaml
+
+**OpenStack Kilo on CentOS/RHEL with OpenContrail networking**
+
+``/_static/scripts/envs/openstack_cluster_kilo_ubuntu_opencontrail.env.example``
+
+.. literalinclude:: /_static/scripts/envs/openstack_cluster_kilo_ubuntu_opencontrail.env.example
+   :language: yaml
 
 .. code-block:: bash
 
-   $ ./create_stack.sh openstack_salt_ubuntu_single tcp_cloud
+   $ heat stack-create -e envs/ENV_FILE -f openstack_single.hot
+   $ heat stack-create -e envs/ENV_FILE -f openstack_cluster.hot
 
 If everything goes right, stack should be ready in a few minutes. You can verify by running following commands:
 
@@ -225,10 +435,41 @@ If everything goes right, stack should be ready in a few minutes. You can verify
 
 You should be also able to log in as root to public IP provided by ``nova list`` command. When this cluster is deployed, you canlog in to the instances through the Salt master node.
 
-.. _Heat template: https://github.com/tcpcloud/heat-templates
-.. _OpenStack-Salt heat templates repository: https://github.com/tcpcloud/heat-templates
-.. _tcp cloud image: http://apt.tcpcloud.eu/images/
+Current state of supported env configurations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. list-table::
+   :stub-columns: 1
+
+   *  - **ENV configuration**
+      - **Single Status**
+      - **Cluster Status**
+   *  - OS Kilo Ubuntu with OpenContrail
+      - Stable
+      - Stable
+   *  - OS Kilo RedHat single with OpenContrail
+      - Experimental
+      - Experimental
+   *  - OS Kilo Ubuntu single with Neutron DVR
+      - Experimental
+      - NONE
+
+OpenStack Heat templates
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+**OpenStack single Heat template**
+
+``/_static/scripts/openstack_single.hot``
+
+.. literalinclude:: /_static/scripts/openstack_single.hot
+   :language: yaml
+
+**OpenStack cluster Heat template**
+
+``/_static/scripts/openstack_cluster.hot``
+
+.. literalinclude:: /_static/scripts/openstack_cluster.hot
+   :language: yaml
 
 Openstack-salt testing labs
 ---------------------------
