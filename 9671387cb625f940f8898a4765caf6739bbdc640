@@ -1,0 +1,8 @@
+Code-Review+2: Ales Komarek <ales.komarek@tcpcloud.eu>
+Workflow+1: Ales Komarek <ales.komarek@tcpcloud.eu>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Sun, 03 Jul 2016 18:09:51 +0000
+Reviewed-on: https://review.openstack.org/336940
+Project: openstack/openstack-salt
+Branch: refs/heads/master
