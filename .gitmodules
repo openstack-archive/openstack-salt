@@ -16,6 +16,9 @@
 [submodule "formulas/keystone"]
 	path = formulas/keystone
 	url = https://git.openstack.org/openstack/salt-formula-keystone
+[submodule "formulas/midonet"]
+	path = formulas/midonet
+	url = https://git.openstack.org/openstack/salt-formula-midonet
 [submodule "formulas/neutron"]
 	path = formulas/neutron
 	url = https://git.openstack.org/openstack/salt-formula-neutron
@@ -25,6 +28,9 @@
 [submodule "formulas/opencontrail"]
 	path = formulas/opencontrail
 	url = https://git.openstack.org/openstack/salt-formula-opencontrail
+[submodule "formulas/swift"]
+	path = formulas/swift
+	url = https://git.openstack.org/openstack/salt-formula-swift
 [submodule "formulas/linux"]
 	path = formulas/linux
 	url = https://github.com/tcpcloud/salt-formula-linux.git
