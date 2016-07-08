@@ -136,15 +136,19 @@ All supported OpenStack cloud platform services.
    *  - keystone
       - https://github.com/openstack/salt-formula-keystone
    *  - magnum
-      - https://github.com/tcpcloud/salt-formula-keystone
+      - https://github.com/tcpcloud/salt-formula-magnum
+   *  - midonet
+      - https://github.com/openstack/salt-formula-midonet
    *  - murano
-      - https://github.com/tcpcloud/salt-formula-keystone
+      - https://github.com/tcpcloud/salt-formula-murano
    *  - neutron
       - https://github.com/openstack/salt-formula-neutron
    *  - nova
       - https://github.com/openstack/salt-formula-nova
    *  - opencontrail
       - https://github.com/openstack/salt-formula-opencontrail
+   *  - swift
+      - https://github.com/openstack/salt-formula-swift
 
 
 Monitoring services
