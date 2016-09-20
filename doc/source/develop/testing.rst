@@ -8,6 +8,7 @@ Chapter 3. Testing
    testing-coding-style.rst
    testing-metadata.rst
    testing-integration.rst
+   testing-kitchen.rst
 
 --------------
 
