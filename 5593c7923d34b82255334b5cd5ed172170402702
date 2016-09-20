@@ -1,0 +1,8 @@
+Code-Review+2: Jakub Pavlik <pavlk.jakub@gmail.com>
+Workflow+1: Jakub Pavlik <pavlk.jakub@gmail.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Tue, 20 Sep 2016 14:24:24 +0000
+Reviewed-on: https://review.openstack.org/373344
+Project: openstack/openstack-salt
+Branch: refs/heads/master
